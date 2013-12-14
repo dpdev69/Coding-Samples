@@ -29,7 +29,7 @@ public class Card {
    */
   public Card(int value, int suit) {
     if (value < 1 || value > 13) {
-      throw new RuntimeException("Illegal card value attempted. The " + "
+      throw new RuntimeException("Illegal card value attempted. The " + 
         "acceptable range is 1 to 13. You tried " + suit);
     }
     
