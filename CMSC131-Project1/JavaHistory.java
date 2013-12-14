@@ -38,3 +38,4 @@ public class JavaHistory {
 	    System.out.println("That browser was Netscape.");
 	}
 }
+
