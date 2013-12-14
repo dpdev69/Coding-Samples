@@ -41,7 +41,7 @@ public class view extends JPanel {
   }
   
   /** Allow listener to register with the view as both a MouseListener and also
-   * as a MouseMotionListener
+   * as a MouseMotionListener */
   public void registerMouseListener(MyMouseListener listener {
     addMouseListener(listener);
     addMouseMotionListener(listener);
@@ -52,7 +52,7 @@ public class view extends JPanel {
     addComponentListener(listener);
   }
   
-  /** Tell view that model has changed, so re-draw when you feel like it *
+  /** Tell view that model has changed, so re-draw when you feel like it */
   public void updateYourself() {
     repaint();
   }
