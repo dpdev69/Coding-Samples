@@ -1,0 +1,83 @@
+# Emmanuel Taylor
+# UID: 111615834
+# Directory ID: etaylor5
+# CMSC216: Project 4: Assembly
+#
+# palindrome.ys
+
+MAIN:	     irmovl  MYDATA, %ebx    # Starting address of the array.
+	     irmovl  $80, %edx       # Respresents max_characters.
+	     irmovl  $0, %esi        # Iteration variable.
+	     
+LOOP1:	     subl    %edx, %ecx      # Checks if the variable < max_characters. 
+             je      BREAK1	     # If they are equal, break the loop.
+
+             rdch    %eax            # Reading chars from user.
+             rmmovl  %eax, 0(%ebx)   # Updates the characters value in memory.
+             irmovl  $10, %edi       # Places newline character in %edi.
+             subl    %edi, %eax      # Checking is user enters \n first.
+             je      BREAK1          # If they are equal, break the loop.
+   
+             irmovl  $4, %ecx        # Stores integer for in %ecx.
+             addl    %ecx, %ebx      # Moves to the next element in the array.
+             addl    %ecx, %esi      # Increments the index with 4 bytes.
+             jmp     LOOP1           # Reiterate through this loop.
+	     
+BREAK1:      rrmovl  %esi, %edx      # Sets datalength equal to index.
+             irmovl  $0, %esi        # Resets index to 0.
+             irmovl  $2, %ecx        # Stores the integer 2 in %ecx.
+             rrmovl  %edx, %eax      # Copies datalength into %eax.
+             divl    %ecx, %eax      # Represents datalength/2.
+
+LOOP2:       rrmovl  %esi, %ecx      # Makes a copy of index into %ecx.
+             subl    %eax, %ecx      # Checks if index is > datalength/2.
+             jg      FINISH          # If true, break loop and print out Y.
+
+             irmovl  MYDATA, %ebx    # Reset the array start address.
+             irmovl  $4, %ecx        # Stores integer 4 into %ecx.
+             subl    %ecx, %edx      # Creates a new index.
+             addl    %edx, %ebx      # Represents arr[datalength - index - 4].
+             mrmovl  0(%ebx), %edi   # Updates in memory.
+             subl    %edx, %ebx      # Returns array index to original position.
+             addl    %esi, %ebx      # Add index to the array position.
+             mrmovl  0(%ebx), %ecx   # Updates in memory.
+             subl    %ecx, %edi      # Checking if these two items are equal.
+             jne     BREAK2          # If not equal, break loop and print out N.
+
+             irmovl  $4, %ecx        # Stores integer 4 into %ecx.
+             addl    %ecx, %esi      # Updates the index by adding 4 bytes.
+             jmp     LOOP2           # Reiterating through the loop.
+
+BREAK2:      irmovl  $78, %ecx       # Stores the character N into %ecx.
+	     irmovl  $10, %edi	     # Stores the \n character into %edi.
+             wrch    %ecx            # Prints out N.
+             wrch    %edi	     # Prints out the newline character.
+             halt                    # Exits the program.
+
+FINISH:      irmovl  $89, %ecx       # Stores the character Y into %ecx.
+	     irmovl  $10, %edi	     # Stores the \n character into %edi.
+             wrch    %ecx 	     # Prints out Y.
+             wrch    %edi	     # Prints out the newline character.
+             halt                    # Exits the program.
+
+MYDATA:      .align 4
+             .long 0
+             .long 4
+	     .long 8
+             .long 12
+	     .long 16
+	     .long 20
+	     .long 24
+	     .long 28
+	     .long 32
+	     .long 36
+	     .long 40
+	     .long 44
+	     .long 48
+	     .long 52
+	     .long 56
+	     .long 60
+	     .long 64
+	     .long 68
+	     .long 72
+	     .long 76
