@@ -52,33 +52,33 @@ public class WhichSystem {
             }
             
             if (compProcesses * numUsers >= 31) {
-						  if (compProcesses * numUsers <= 50) {
-							  int numUnits = 2;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-								                   numUnits + " units of memory.");
-						  }
-					  }
+              if (compProcesses * numUsers <= 50) {
+              	int numUnits = 2;
+              	System.out.println("On " + compSystem + " with " + numUsers + 
+              			   " users each running " + compProcesses + " processes, you will need " +
+              			   numUnits + " units of memory.");
+              }
+            }
+            
+	    if (compProcesses * numUsers >= 51) {
+	      if (compProcesses * numUsers <= 75) {
+	      	int numUnits = 3;
+	      	System.out.println("On " + compSystem + " with " + numUsers + 
+	      			   " users each running " + compProcesses + " processes, you will need " +
+	      			   numUnits + " units of memory.");
+	      }
+	    }
 					
-					  if (compProcesses * numUsers >= 51) {
-						  if (compProcesses * numUsers <= 75) {
-							  int numUnits = 3;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-							                     numUnits + " units of memory.");
-					  	}
-					  }
-					
-					  if (compProcesses * numUsers >= 76)	{
-						  if (compProcesses * numUsers <= 100) {
-							  int numUnits = 4;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-							                     numUnits + " units of memory.");
-						  }
-					  }
-				  }
-			  }
+            if (compProcesses * numUsers >= 76)	{
+              if (compProcesses * numUsers <= 100) {
+              	int numUnits = 4;
+              	System.out.println("On " + compSystem + " with " + numUsers + 
+	                           " users each running " + compProcesses + " processes, you will need " +
+         	                   numUnits + " units of memory.");
+	      }
+	    }
+	  }
+	}
 
         if (compSystem.equals("linux")) {
           System.out.println("Processes?");
@@ -103,17 +103,17 @@ public class WhichSystem {
             }
             
             if (compProcesses * numUsers >= 50) {
-						  if (compProcesses * numUsers <= 100) {
-							  int numUnits = 2;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-								                   numUnits + " units of memory.");
-						  }
-					  }
-				  }
-			  }
+              if (compProcesses * numUsers <= 100) {
+              	int numUnits = 2;
+              	System.out.println("On " + compSystem + " with " + numUsers + 
+				   " users each running " + compProcesses + " processes, you will need " +
+				   numUnits + " units of memory.");
+	      }
+	    }
+	  }
+	}
 			  
-			 if (compSystem.equals("mac")) {
+	if (compSystem.equals("mac")) {
           System.out.println("Processes?");
           int compProcesses = inStream.nextInt();
           
@@ -136,33 +136,33 @@ public class WhichSystem {
             }
             
             if (compProcesses * numUsers >= 26) {
-						  if (compProcesses * numUsers <= 60) {
-							  int numUnits = 2;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-								                   numUnits + " units of memory.");
-						  }
-					  }
+              if (compProcesses * numUsers <= 60) {
+              	int numUnits = 2;
+              	System.out.println("On " + compSystem + " with " + numUsers + 
+		                   " users each running " + compProcesses + " processes, you will need " +
+			           numUnits + " units of memory.");
+	      }
+	    }
 					
-					  if (compProcesses * numUsers >= 61) {
-						  if (compProcesses * numUsers <= 100) {
-							  int numUnits = 3;
-							  System.out.println("On " + compSystem + " with " + numUsers + 
-							                     " users each running " + compProcesses + " processes, you will need " +
-							                     numUnits + " units of memory.");
-					  	}
-					  }
-				  }
-			  }
-			  
-			  if (!compSystem.equals("windows")) {
-			    if (!compSystem.equals("linux")) {
-			      if (!compSystem.equals("mac")) {
-			        System.out.println("Impossible");
-			      }
-			    }
-			  }
-			}
+	    if (compProcesses * numUsers >= 61) {
+	      if (compProcesses * numUsers <= 100) {
+	      	int numUnits = 3;
+	      	System.out.println("On " + compSystem + " with " + numUsers + 
+		       		   " users each running " + compProcesses + " processes, you will need " +
+                                   numUnits + " units of memory.");
+	      }
+	    }
 	  }
 	}
+		
+	if (!compSystem.equals("windows")) {
+	  if (!compSystem.equals("linux")) {
+	    if (!compSystem.equals("mac")) {
+	      System.out.println("Impossible");
+	    }
+	  }
+	}
+      }
+    }
+  }
 }
