@@ -93,3 +93,4 @@ public class DrawingGrid extends JPanel {
       g.drawLine(offset, offset + j * SQUARE_SIZE, offset + scale * SQUARE_SIZE, offset + j * SQUARE_SIZE);
   }
 }
+
