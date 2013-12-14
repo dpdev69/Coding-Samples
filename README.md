@@ -1,7 +1,7 @@
 Coding-Samples
 ==============
 
-Here are some coding examples from my college courses.
+Here are some coding samples from my college courses.
 
 CMSC131 - Introduction to Object-Oriented Programming I
 
