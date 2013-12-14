@@ -1,625 +1,406 @@
 /*
- * Name: Emmanuel Taylor
+ * Name: Emmanuel Taylor 
  * Discussion Section: Section 0202
  * Student ID Number: 111615834
  * Student Terpconnect Login ID: etaylor5
  */
 
 /*
- * The purpose of this class is to execute different methods that are required
- * for the game Othello such as restarting the game and interchanging between
- * different turns for black or white pieces. This method also creates a board
- * object and can return the number of colored pieces on the board. This method
- * is mostly used to execute commands that are required to move the pieces to
- * a different spot on the board.
+ * The purpose of this class is to implement an unsorted and unordered 
+ * list in which values will be input without considering the order of the
+ * values in the list. This class is the superclass of the sorted class. This 
+ * class will contain values in any order of any value.
  */
-package othello;
+package list;
 
+import java.util.Comparator; 
+import java.lang.Iterable;
+import java.util.Iterator;
+import java.lang.IndexOutOfBoundsException;
 import java.util.NoSuchElementException;
-import java.lang.IllegalArgumentException;
+import list.List.Node;
 
-public class Othello {
-
-	/*
-	 * Three instance variables for the board, the turn, and the 
-	 * number of black and white pieces.
-	 */
-	Piece[][] board;
-	Piece turn;
-	int blackPieces, whitePieces;
+public class List<T> implements Iterable<T>, Comparable<List<T>> {
 
 	/*
-	 * These variables are used to store values for the corners of each trap.
+	 * Two field variables created for the Node of type T and a Comparator of
+	 * type T for used throughout the entire program.
 	 */
-	int trapRightRow = 8;
-	int trapRightCol = 8;
-	int trapLeftRow = 8;
-	int trapLeftCol = 8;
-	int trapDownRow = 8;
-	int trapDownCol = 8;
-	int trapUpRow = 8;
-	int trapUpCol = 8;
-	int leftUpRow = 8;
-	int leftUpCol = 8;
-	int leftDownRow = 8;
-	int leftDownCol = 8;
-	int rightUpRow = 8;
-	int rightUpCol = 8;
-	int rightDownRow = 8;
-	int rightDownCol = 8;
+	protected Node<T> head;
+	Comparator<T> comp;
 
-	/*
-	 * Constructor in which an othelloBoard is created and filled
-	 * with empty game pieces. Sets the board equal to the othelloBoard
-	 * in the constructor and sets the default turn to the black piece.
-	 */
-	public Othello() {
-		Piece[][] othelloBoard = new Piece[8][8];
-		for(int row = 0; row < 8; row++){
-			for(int col = 0; col < 8; col++){
-				othelloBoard[row][col] = Piece.NONE;
-			}
-		}
-
-		this.board = othelloBoard;
-		this.turn = Piece.BLACK;
+	// you may not change this inner class!
+	protected class Node<D> {
+		D data;
+		Node<D> next;
 	}
 
 	/*
-	 * Copy constructor to set otherObj.board equal to the board
-	 * created in the constructor.
+	 * This is the list constructor that is used to set the node that was
+	 * created to null and setting the comparator that was created equal to
+	 * comparator
 	 */
-	public Othello(Othello otherObj) {
-		for(int row = 0; row < 8; row++){
-			for(int col = 0; col < 8; col++){
-				this.board[row][col] = otherObj.board[row][col];
-			}
-		}
-
-		Piece copy = otherObj.turn;
-		this.turn = copy;
+	public List(Comparator<T> comparator) {
+		head = null;
+		comp = comparator;
 	}
 
 	/*
-	 * Method that sets turns to pieces depending on their color and
-	 * returns the board to it's default state with two white and black
-	 * pieces at the center of the board.
+	 * This methods creates a new Node of type T and sets the data of that node
+	 * equal to the node created in the field variable, it then sets the 
+	 * positions after that node equal to null and calls the getLast() helper
+	 * method and sets the next position equal to the new Node.
 	 */
-	public void restart(Piece color) throws IllegalArgumentException {
-		if(color == Piece.WHITE){
-			this.turn = Piece.WHITE;
-		}else if(color == Piece.BLACK){
-			this.turn = Piece.BLACK;
+	public void adderNode(Node<T> node){
+		Node<T> adder = new Node<T>();
+		adder.data = node.data;
+		adder.next = null;
+		this.getLast().next = adder;
+	}
+
+	/*
+	 * This method is the copy constructor that sets the both field variables
+	 * equal to the otherList. Next, a new Node of type T is created and is set
+	 * equal to the position after the otherList's head. While the curr Node is
+	 * not equal to null, adderNode is called and curr is set to the next
+	 * position.
+	 */
+	public List(List<T> otherList) {
+		this.comp = otherList.comp;
+		this.head = otherList.head;
+		Node<T> curr = otherList.head.next;
+		while(curr != null){
+			this.adderNode(curr);
+			curr = curr.next;
+		}
+	}
+
+	/*
+	 * This private method creates a node and sets it equal to the head field
+	 * variable. While the next position after the head is not equal to null,
+	 * the created node is set equal to the next position and at the and node
+	 * is returned.
+	 */
+	private Node<T> getLast(){
+		Node<T> node = head;
+		while(node.next != null){
+			node = node.next;
+		}
+		return node;
+	}
+
+	/*
+	 * This method creates a new node and sets the data equal to the newElt
+	 * parameter. If the head is equal to null, it is set to the new Node and 
+	 * the next positions are set to null. If the head is not null, getLast()
+	 * is called and is set to node and the positions after that node are null.
+	 * This is returned.
+	 */
+	public List<T> add(T newElt) {
+		Node<T> node = new Node<T>();
+		node.data = newElt;
+		if(this.head == null){
+			this.head = node;
+			head.next = null;
 		}else{
-			throw new IllegalArgumentException();
+			this.getLast().next = node;
+			node.next = null;
 		}
-
-		Piece[][] othelloBoard = new Piece[8][8];
-		for(int i = 0; i < 8; i++){
-			for(int j = 0; j < 8; j++){
-				othelloBoard[i][j] = Piece.NONE;
-			}
-		}
-
-		othelloBoard[3][4] = Piece.BLACK;
-		othelloBoard[4][3] = Piece.BLACK;
-		othelloBoard[3][3] = Piece.WHITE;
-		othelloBoard[4][4] = Piece.WHITE;
-
-		this.board = othelloBoard;
+		return this;
 	}
 
 	/*
-	 * Method that sets turns to pieces and throws an IllegalArgumentException
+	 * For this method, a new node is created once again, and a variable named
+	 * counter is initialized at 0. If indez is greater than the size of the 
+	 * node - 1 or if this is null, an IndexOutOfBounds exception will be
+	 * thrown. Other wise, node will be set equal to head. While the counter is
+	 * less than the index, node will be iterated until counter is no longer
+	 * less than index. Node's data will be returned.
 	 */
-	public void setTurn(Piece color) throws IllegalArgumentException {
-		if(color == Piece.BLACK){
-			this.turn = Piece.WHITE;
-		}else if(color == Piece.WHITE){
-			this.turn = Piece.BLACK;
-		}else{
-			throw new IllegalArgumentException();
+	public T get(int index) throws IndexOutOfBoundsException {
+		Node<T> node = new Node<T>();
+		int counter = 0;
+		if(index > this.size() - 1 || this.isEmpty()){
+			throw new IndexOutOfBoundsException();
 		}
+		else{
+			node = this.head;
+			while(counter < index){
+				node = node.next;
+				counter++;
+			}
+		}
+		return node.data;
 	}
 
 	/*
-	 * This method is used to return the value of turn whether it is
-	 * black or white. If it is neither, it returns none.
+	 * This method checks to see if the head is empty. If it is, we will return
+	 * null. A new node is created, and a variable found is set to 0. Node is 
+	 * set equal to head. While node is not null and found is equal to zero,
+	 * we will compare our node data with element and check to see if it is 
+	 * equal to zero. If this is true, found will equal 1. If not, node is set
+	 * equal to the next position and the data is returned.
 	 */
-	public Piece getTurn() {
-		if(this.turn == Piece.BLACK){
-			return Piece.BLACK;
-		}else if(this.turn == Piece.WHITE){
-			return Piece.WHITE;
-		}else{
-			return Piece.NONE;
+	public T lookup(T element) {
+		if(this.isEmpty()){
+			return null;
 		}
+		Node<T> node = new Node<T>();
+		int found = 0;
+		node = this.head;
+		while(node != null && found == 0){
+			if(comp.compare(node.data, element) == 0){
+				found = 1;
+			}
+			else{
+				node = node.next;
+			}
+		}
+		return node.data;
 	}
 
 	/*
-	 * Method that sets where pieces are located on the board, the method
-	 * will throw a NoSuchElementException if the user tries to set a piece
-	 * that is out of the board.
+	 * This method creates a variable, size, and sets it equal to zero. If the
+	 * head is empty, size will be returned. If not, a new node is created and
+	 * set equal to head. While that node is not null, node is set equal to the
+	 * next position and size increments by 1. Size is returned after the
+	 * conditional statement is tested.
 	 */
-	public void setEntry(Piece color, int row, int col)
-			throws NoSuchElementException {
-		if((row < 0) || (row > 7) || (col < 0) || (col > 7)){
-			throw new NoSuchElementException();
+	public int size() {
+		int size = 0;
+		if(this.isEmpty()){
+			return size;
 		}else{
-			this.board[row][col] = color;
+			Node<T> node = head;
+			while(node != null){
+				node = node.next;
+				size++;
+			}
 		}
+		return size;
 	}
 
 	/*
-	 * This method returns the row and column of the pieces that are on
-	 * the board.
+	 * This method is used to check if head is empty. True will be returned if
+	 * it is empty, and if it is not empty, false will be returned.
 	 */
-	public Piece getEntry(int row, int col) throws NoSuchElementException {
-		Piece piece;
-		if((row > 7) || (row < 0) || (col > 7) || (col < 0)){ 
-			throw new NoSuchElementException();
-		}else{
-			piece = this.board[row][col];
-			return piece;
-		}
-	}
-
-	/*
-	 * This method checks directions from up, down, left, right and diagonally
-	 * to determine whether the place the piece is trying to move is valid.
-	 */
-	public boolean validMove(Piece color, int row, int col) {
-		int rowUpperBound = 7 - row;
-		int colUpperBound = 7 - col;
-		int trapUp = 0;
-		int trapDown = 0;
-		int trapLeft = 0;
-		int trapRight = 0;
-		int trapUpRight = 0;
-		int trapUpLeft = 0;
-		int trapDownRight = 0;
-		int trapDownLeft = 0;
-		int findOpponentUp = 0;
-		int findOpponentDown = 0;
-		int findOpponentLeft = 0;
-		int findOpponentRight = 0;
-		int findOpponentUpRight = 0;
-		int findOpponentUpLeft = 0;
-		int findOpponentDownRight = 0;
-		int findOpponentDownLeft = 0;
-
-		if((row < 0) || (row > 7) || (col < 0) || (col > 7)){
-			return false;
-		}else if(board[row][col] != Piece.NONE){
-			return false;
-		}else{
-			
-			/*
-			 * Checks vertically upward.
-			 */
-			for(int i = 1; i <= row; i++){
-				if(board[row - i][col] != color && board[row - i][col] 
-						!= Piece.NONE){
-					findOpponentUp = 1;
-				}else if(board[row - i][col] == color){
-					if(findOpponentUp !=0){
-						trapUp = 1;
-						trapUpRow = row - i;
-						trapUpCol = col;
-					}else{
-						break;
-					}
-				}else if(board[row - i][col] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks vertically downward.
-			 */
-			for(int i = 1; i <= rowUpperBound; i++){
-				if(board[row + i][col] != color && board[row + i][col] 
-						!= Piece.NONE){
-					findOpponentDown = 1;
-				}else if(board[row + i][col] == color){
-					if(findOpponentDown !=0){
-						trapDown = 1;
-						trapDownRow = row + i;
-						trapDownCol = col;
-					}else{
-						break;
-					}
-				}else if(board[row + i][col] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks horizontally right.
-			 */
-			for(int i = 1; i <= colUpperBound; i++){
-				if(board[row][col + i] != color && board[row][col + i] 
-						!= Piece.NONE){
-					findOpponentRight = 1;
-				}else if(board[row][col + i] == color){
-					if(findOpponentRight !=0){
-						trapRight = 1;
-						trapRightRow = row;
-						trapRightCol = col + i;
-					}else{
-						break;
-					}
-				}else if(board[row][col + i] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks horizontally left.
-			 */
-			for(int i = 1; i <= col; i++){
-				if(board[row][col - i] != color && board[row][col - i] 
-						!= Piece.NONE){
-					findOpponentLeft = 1;
-				}else if(board[row][col - i] == color){
-					if(findOpponentLeft !=0){
-						trapLeft = 1;
-						trapLeftRow = row;
-						trapLeftCol = col - i;
-					}else{
-						break;
-					}
-				}else if(board[row][col - i] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks diagonally upward and right.
-			 */
-			for(int i = 1; i <= row && i <= colUpperBound; i++){
-				if(board[row - i][col + i] != color && board[row - i][col + i] 
-						!= Piece.NONE){
-					findOpponentUpRight = 1;
-				}else if(board[row - i][col + i] == color){
-					if(findOpponentUpRight !=0){
-						trapUpRight = 1;
-						rightUpRow = row - i;
-						rightUpCol = col + i;
-					}else{
-						break;
-					}
-				}else if(board[row - i][col + i] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks diagonally upward and left.
-			 */
-			for(int r = 1; r<=row && r <=col; r++){
-				if(board[row-r][col-r] != color && board[row-r][col-r] 
-						!= Piece.NONE){
-					findOpponentUpLeft = 1;
-				}else if(board[row-r][col-r] == color){
-					if(findOpponentUpLeft !=0){
-						trapUpLeft = 1;
-						leftUpRow = row-r;
-						leftUpCol = col-r;
-					}else{
-						break;
-					}
-				}else if(board[row-r][col-r] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks diagonally downward and left.
-			 */
-			for(int i = 1; i <= rowUpperBound && i <= col; i++){
-				if(board[row + i][col - i] != color && board[row + i][col - i] 
-						!= Piece.NONE){
-					findOpponentDownLeft = 1;
-				}else if(board[row + i][col - i] == color){
-					if(findOpponentDownLeft !=0){
-						trapDownLeft = 1;
-						leftDownRow = row + i;
-						leftDownCol = col - i;
-					}else{
-						break;
-					}
-				}else if(board[row + i][col - i] == Piece.NONE){
-					break;
-				}
-			}
-
-			/*
-			 * Checks diagonally downward and right.
-			 */
-			for(int i = 1; i <= rowUpperBound && i <= colUpperBound; i++){
-				if(board[row + i][col + i] != color && board[row + i][col + i] 
-						!= Piece.NONE){
-					findOpponentDownRight = 1;
-				}else if(board[row + i][col + i] == color){
-					if(findOpponentDownRight !=0){
-						trapDownRight = 1;
-						rightDownRow = row + i;
-						rightDownCol = col + i;
-					}else{
-						break;
-					}
-				}else if(board[row + i][col + i] == Piece.NONE){
-					break;
-				}
-			}
-		}
-		if(trapUp !=0 || trapDown!=0 || trapLeft !=0 || trapRight !=0 || 
-				trapDownRight !=0 || trapDownLeft !=0 || trapUpLeft!=0 || 
-				trapUpRight !=0){
+	public boolean isEmpty() {
+		if(this.head == null){
 			return true;
-		}else{
+		}
+		else{
 			return false;
 		}
 	}
 
 	/*
-	 * Method that controls movements on the actual game board.
+	 * This method will return null if the head is empty. Two new nodes are 
+	 * created and new variable is initialized at 0. One node is set to null 
+	 * and the other is set equal to the head. While the curr node is not null
+	 * and found is 0, we will compare the data with the element and if this 
+	 * equals 0, found will be changed to one. If not, prev node will be set
+	 * equal to curr and curr will be set equal to curr.next. When found is 
+	 * equal to zero, a NoSuchElementException is thrown. 
 	 */
-	public void move(int row, int col) {
-		Piece color = this.getTurn();
-		if(validMove(color, row, col)){
-			validMove(color, row, col);
-			board[row][col] = color;
-
-			if(trapUpRow != 8){
-				for(int i = row; i >= trapUpRow; i--){
-					board[i][col] = color;
-				}
-			}
-
-			if(trapDownRow != 8){
-				for(int i = row; i <= trapDownRow; i++){
-					board[i][col] = color;
-				}
-			}
-
-			if(trapLeftRow != 8){
-				for(int j = col; j >= trapLeftCol; j--){
-					board[row][j] = color;
-				}
-			}
-
-			if(trapRightRow != 8){
-				for(int j = col; j <= trapRightCol; j++){
-					board[row][j] = color;
-				}
-			}
-
-			if(rightUpCol != 8){
-				for(int j = 1; (j <= rightUpCol - col) && (j <= row 
-						- rightUpRow); j++){
-					board[row - j][col + j] = color;
-				}
-			}
-
-			if(leftUpCol !=8){
-				for(int j = 1; (j <= row - leftUpCol) && (j >= col 
-						- leftUpCol); j++){
-					board[row - j][col - j] = color;
-				}
-			}
-
-			if(leftDownCol != 8){
-				for(int j = 1; (j <= col - leftDownCol) && (j <= leftDownRow
-						- row); j++){
-					board[row + j][col - j] = color;
-				}
-			}
-
-			if(rightDownCol != 8){
-				for(int j = 1; (j <= rightDownCol - col) && (j <= rightDownRow 
-						- row); j++){
-					board[row + j][col + j] = color;
-				}
-			}
-
-			/*
-			 * Rests the end pieces of each row and column back to 8.
-			 */
-			trapLeftRow = 8;
-			trapLeftCol = 8;
-			trapRightRow = 8;
-			trapRightCol = 8;
-			trapUpRow = 8;
-			trapUpCol = 8;
-			trapDownRow = 8;
-			trapDownCol = 8;
-			rightUpRow = 8;
-			rightUpCol = 8;
-			leftUpRow = 8;
-			leftUpCol = 8;
-			leftDownRow = 8;
-			leftDownCol = 8;
-			rightDownRow = 8;
-			rightDownCol = 8;
-
-			if(color == Piece.BLACK){
-				turn = Piece.WHITE;
+	public List<T> delete(T element) throws NoSuchElementException {
+		if(this.isEmpty())
+			return null;
+		Node<T> curr = new Node<T>();
+		Node<T> prev = new Node<T>();
+		int found = 0;
+		prev = null;
+		curr = this.head;
+		while(curr != null && found == 0){
+			if(comp.compare(curr.data, element) == 0){
+				found = 1;
 			}else{
-				turn = Piece.BLACK;
+				prev = curr;
+				curr = curr.next;
 			}
+		}
+		if( found == 0){
+			throw new NoSuchElementException();
+		}else{
+			if(curr!= null){
+				if(curr == head){
+					head = head.next;
+				}else{
+					prev.next = curr.next;
+				}
+			}
+		}
+		return this;
+	}
+
+	/*
+	 * This method checks to see if the head is empty. If so, the program will
+	 * throw a NoSuchElementException. A new node is created and a new variable
+	 * found is set to 0. Node is set equal to head. While node is not equal to
+	 * null and found is equal to 0, we compare the data and oldElt and if
+	 * it is equal to zero, found changes to 1. If not, node equals the next 
+	 * position. If found equals zero, a NoSuchElementException is thrown, if 
+	 * not, the data equals newElt.
+	 */
+	public void replace(T oldElt, T newElt) throws NoSuchElementException {
+		if(this.isEmpty())
+			throw new NoSuchElementException();
+		Node<T> node = new Node<T>();
+		int found = 0;
+		node = this.head;
+		while(node != null && found ==0){
+			if(comp.compare(node.data, oldElt) == 0){
+				found = 1;
+			}else{
+				node = node.next;
+			}
+		}
+		if(found == 0){
+			throw new NoSuchElementException();
+		}else{
+			node.data = newElt;
 		}
 	}
 
 	/*
-	 * Methods that controls moves and moves them in the direction they are 
-	 * at by calling the validMove method to determine whether it is valid.
+	 * This method checks to see if head is empty. If it is empty, a
+	 * NoSuchElementException is thrown. If not, two nodes, node and largest 
+	 * are created and are both set equal to head. While the next positions in 
+	 * node are not equal to null, node is set equal to the next position.
+	 * Next we compare the data from node and largest. If the variable is 
+	 * greater than zero, largest is set equal to node. largest.data is
+	 * returned.
 	 */
-	public void move(Piece color, int row, int col) {
-		if(validMove(color,row,col)){
-			validMove(color,row,col);
-			board[row][col] = color;
-
-			if(trapUpRow != 8){
-				for(int i = row; i >= trapUpRow; i--){
-					board[i][col] = color;
+	public T getLargest() throws NoSuchElementException {
+		if(this.isEmpty()){
+			throw new NoSuchElementException();
+		}else{
+			Node<T> node = new Node<T>();
+			Node<T> largest = new Node<T>();
+			node = head;
+			largest = head;
+			while(node.next != null){
+				node = node.next;
+				int cp = comp.compare((T) node.data, (T) largest.data);
+				if(cp > 0){
+					largest = node;
 				}
 			}
+			return largest.data;
+		}
+	}
 
-			if(trapDownRow != 8){
-				for(int i = row; i <= trapDownRow; i++){
-					board[i][col] = color;
+	/*
+	 * This method checks to see if head is empty. If so, the program will 
+	 * throw a NoSuchElementException. If not, two new nodes, node and smallest,
+	 * are created and both set equal to head. While node isn't empty, node is
+	 * set equal to the next position. Next we compare the data for node and 
+	 * smallest. If the variable is less than zero, smallest is set equal to 
+	 * the node. Smallest.data is returned.
+	 */
+	public T getSmallest() throws NoSuchElementException {
+		if(this.isEmpty()){
+			throw new NoSuchElementException();
+		}else{
+			Node<T> node = new Node<T>();
+			Node<T> smallest = new Node<T>();
+			node = head;
+			smallest = head;
+			while(node.next != null){
+				node = node.next;
+				int cp = comp.compare((T) node.data, (T) smallest.data);
+				if(cp < 0){
+					smallest = node;
 				}
 			}
-
-			if(trapLeftRow != 8){
-				for(int j = col; j >= trapLeftCol; j--){
-					board[row][j] = color;
-				}
-			}
-
-			if(trapRightRow != 8){
-				for(int j = col; j <= trapRightCol; j++){
-					board[row][j] = color;
-				}
-			}
-
-			if(rightUpCol != 8){
-				for(int j = 1; (j <= rightUpCol - col) && (j <= row
-						- rightUpRow); j++){
-					board[row - j][col + j] = color;
-				}
-			}
-
-			if(leftUpCol != 8){
-				for(int j = 1; (j <= row - leftUpRow) && (j >= col 
-						- leftUpCol); j++){
-					board[row - j][col - j] = color;
-				}
-			}
-
-			if(leftDownCol != 8){
-				for(int j = 1; (j <= col - leftDownCol) && (j <= leftDownRow 
-						- row); j++){
-					board[row + j][col - j] = color;
-				}
-			}
-
-			if(rightDownCol != 8){
-				for(int j = 1; (j <= rightDownCol - col) && (j <= rightDownRow 
-						- row); j++){
-					board[row + j][col + j] = color;
-				}
-			}
-
-			/*
-			 * Rests the end pieces of each row and column back to 8.
-			 */
-			trapLeftRow = 8;
-			trapLeftCol = 8;
-			trapRightRow = 8;
-			trapRightCol = 8;
-			trapUpRow = 8;
-			trapUpCol = 8;
-			trapDownRow = 8;
-			trapDownCol = 8;
-			rightUpRow = 8;
-			rightUpCol = 8;
-			leftUpRow = 8;
-			leftUpCol = 8;
-			leftDownRow = 8;
-			leftDownCol = 8;
-			rightDownRow = 8;
-			rightDownCol = 8;
-
-			if(color == Piece.BLACK){
-				turn = Piece.WHITE;
-			}else{
-				turn = Piece.BLACK;
-			}
+			return smallest.data;
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
-	 * Method that returns the board as a string to check which pieces are
-	 * where and which pieces are moving where.
 	 */
 	public String toString() {
-		String var = " ";
-		var += " 0 1 2 3 4 5 6 7\n";
-
-		for(int row = 0; row < board.length; row++){
-			var += row;
-			for(int col = 0; col < board.length; col++){
-				if(board[row][col] == Piece.NONE)
-					var += " -";
-				if(board[row][col] == Piece.BLACK)
-					var += " B";
-				if(board[row][col] == Piece.WHITE)
-					var += " W";
-			}
-
-			var += "\n";
-		}
-
-		return var;
-	}
-
-	/*
-	 * Method that returns the count of the number of pieces that 
-	 * are on the game board.
-	 */
-	public int count(Piece color) {
-		int count = 0;
-		for(int i = 0; i < 8; i++){
-			for(int j = 0; j < 8; j++){
-				if(board[i][j] == color){
-					count++;
-				}
+		String retVal = new String("");
+		if(this.head == null){
+			return retVal;
+		}else{
+			Node<T> node = head;
+			retVal += node.data.toString();
+			while(node.next != null){
+				node = node.next;
+				retVal += (" " + node.data.toString());
 			}
 		}
-		return count;
+		return retVal;
 	}
 
 	/*
-	 * Method that determines if there are more black pieces on the game board
-	 * than white pieces.
+	 * This method makes head empty or "clears" it.
 	 */
-	public boolean moreBlackPieces() {
-		if(whitePieces > blackPieces){
-			return false;
-		}
-		else{
-			return true;
-		}
+	public void clear() {
+		this.head = null;
 	}
 
 	/*
-	 * Method that determines if there are more white pieces on the game board
-	 * than black pieces.
+	 * (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public boolean moreWhitePieces() {
-		if(blackPieces > whitePieces){
-			return false;
-		}
-		else{
-			return true;
-		}
+	public int compareTo(List<T> otherList) {
+		return this.toString().compareTo(otherList.toString());
 	}
 
 	/*
-	 * Method that determines if the number of white pieces and black pieces
-	 * on the game board are equal.
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
 	 */
-	public boolean equalPieces() {
-		if(blackPieces == whitePieces){
-			return true;
+	public ListIterator<T> iterator() {
+		return new ListIterator<T>();
+	}
+
+	/*
+	 * Uses the three methods hasNext, next, and remove to iterate through the
+	 * lists.
+	 */
+	public class ListIterator<E> implements Iterator<E> {
+		Node<E> head;
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.util.Iterator#hasNext()
+		 */
+		public boolean hasNext() {
+			Node<E> curr = new Node<E>();
+			curr = head;
+			if(curr.next != null){
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
-		else{
-			return false;
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.util.Iterator#next()
+		 */
+		public E next() throws NoSuchElementException {
+			Node<E> curr = new Node<E>();
+			curr = head;
+			if(hasNext() == true){
+				return curr.data;
+			}
+			else{
+				throw new NoSuchElementException();
+			}
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.util.Iterator#remove()
+		 */
+		public void remove() {
+
 		}
 	}
 }
