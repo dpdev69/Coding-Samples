@@ -40,7 +40,7 @@ public class Food implements Listable {
     new Food("Waffle", 178, 350, "Waffle.jpg"),
     new Food("Egg", 47, 89, "Egg.jpg"),
     new Food("Orange Juice", 77, 199, "OrangeJuice.jpg"),
-    new Food("Milk, 52, 179, "Milk.jpg"),
+    new Food("Milk", 52, 179, "Milk.jpg"),
     new Food("Toast", 66, 125, "Toast.jpg"),
     new Food("Hashbrowns", 127, 195, "Hashbrowns.jpg"),
     new Food("Pancakes", 179, 350, "Pancakes.jpg"),
