@@ -1,0 +1,59 @@
+# Emmanuel Taylor
+# UID: 111615834
+# Directory ID: etaylor5
+# CMSC216: Project 4: Assembly
+#
+# fibonacci.ys
+
+MAIN:	irmovl	 $0x1000, %esp		# initialize the stack pointer.
+
+	rdint	 %eax			# reads value for n from the user.
+	irmovl 	 $0, %ebx		# puts value 0 in register ebx.
+	pushl 	 %eax 			# pushes paramater onto the stack.
+	call 	 FIBO			# calls FIBO function.
+	popl	 %eax			# removes parameter from the stack.
+	wrint 	 %ebx			# writes 0 to standard output.
+	irmovl	 $10, %edx		# puts \n character in register edx.
+	wrch 	 %edx			# prints the \n.
+	halt 				# program finishes.
+
+FIBO:	pushl 	 %ebp			# saving the old frame pointer.
+	rrmovl 	 %esp, %ebp		# sets the new frame pointer.
+	mrmovl 	 8(%ebp), %eax		# retrieving the parameter
+
+	irmovl 	 $1, %edx		# puts value 1 in register edx.
+
+	andl 	 %eax, %eax		# bitwise and on register eax contents.
+	je 	 DONE1			# if result equals 0, jump to DONE.
+
+	subl 	 %eax, %edx		# subtracts eax from edx.
+	je 	 DONE2			# if result is 0, eax must be 1.. DONE2.
+
+	# (N - 1)
+	irmovl	 $1, %edx		# puts value 1 in register edx.
+	rrmovl 	 %eax, %ecx		# makes a copy of eax inside ecx.
+	subl 	 %edx, %ecx		# ecx becomes (n - 1).
+	pushl 	 %ecx 			# pushes (n - 1) onto the stack.
+	call 	 FIBO			# recursively calls FIBO function.
+	popl 	 %ecx			# removes (n - 1) from the stack.
+	mrmovl   8(%ebp), %eax		# retrieves the parameter.
+
+	# (N - 2)
+	irmovl   $2, %edx		# puts value 2 in register edx.
+	rrmovl 	 %eax, %ecx		# makes a copy of eax in ecx.
+	subl 	 %edx, %ecx		# ecx becomes (n - 2).
+	pushl 	 %ecx 			# pushes (n - 2) onto the stack.
+	call 	 FIBO			# recursively calls FIBO function
+	popl 	 %ecx			# removes (n - 2) from the stack.
+
+	jmp 	 DONE1			# jump to DONE1.
+
+DONE2:	irmovl   $1, %edx		# puts value 1 in register edx.
+	addl 	 %edx, %ebx		# adds edx and ebx.
+	rrmovl 	 %ebp, %esp		# resets the stack pointer.
+	popl 	 %ebp    		# restore the old frame pointer.
+	ret  				# exits.
+
+DONE1:	rrmovl 	 %ebp, %esp		# resets the stack pointer.
+	popl 	 %ebp 			# restore old frame pointer.
+	ret  				# exits.
