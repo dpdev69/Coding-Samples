@@ -13,3 +13,4 @@ public class Driver {
     new Controller(RED_TEAM, BLUE_TEAM, ROWS, COLS, TEAM_SIZE, OBSTACLES);
   }
 }
+
