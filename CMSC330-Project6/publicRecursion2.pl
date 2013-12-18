@@ -1,6 +1,6 @@
 /* swap values u,v in list b, assume all list elements are unique */
 
-list_swap_test(L, X, Y) :- findall(V, list_swap_val(L, X, Y, V), R), write(R), ml.
+list_swap_test(L, X, Y) :- findall(V, list_swap_val(L, X, Y, V), R), write(R), nl.
 list_swap_public :-
   list_swap_test([5, 6, 7, 3], 7, 5),
   list_swap_test([5, 6, 7, 3], 6, 5),
