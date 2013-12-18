@@ -7,7 +7,7 @@ list_swap_public :-
   list_swap_test([5, 6, 7, 3], 3, 5),
   list_swap_test([5, 6, 7, 3], 7, 3).
   
-/* returns inde of value v in list x, if found &/
+/* returns inde of value v in list x, if found */
 
 index_test(L, X) :- findall(V, index(L, X, V), R), write(R), nl.
 index_public :-
