@@ -2,7 +2,7 @@
 
 get_val_test(L,N) :- findall(V, get_val(L,N,V), R), write(R), nl.
 get_val_public :-
-	get_val_test([5,6,7,3],0),
+  get_val_test([5,6,7,3],0),
 	get_val_test([5,6,7,3],1),
 	get_val_test([5,6,7,3],2),
 	get_val_test([5,6,7,3],3),
