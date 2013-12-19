@@ -1,0 +1,15 @@
+% Ruby space.rb simulate public_1.in
+=== Starports ===
+Earth 1
+Vulcan 1
+=== Starships ===
+Enterprise 1
+=== Travelers ===
+Kirk Earth Vulcan
+=== Output ===
+Enterprise docking at Earth
+  Kirk boarding Enterprise at Earth
+Enterprise departing from Earth
+Enterprise docking at Vulcan
+  Kirk departing Enterprise at Vulcan
+  
