@@ -1,0 +1,107 @@
+% ruby space.rb display public_2.out
+----------------------------------------
+Earth         Kirk McCoy Spock
+Vulcan
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk McCoy Spock
+  Enterprise
+Vulcan
+----------------------------------------
+McCoy boarding Enterprise at Earth
+----------------------------------------
+Earth         Kirk Spock
+  Enterprise  McCoy
+Vulcan
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         Kirk Spock
+Vulcan
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth         Kirk Spock
+Vulcan
+  Enterprise  McCoy
+----------------------------------------
+McCoy departing Enterprise at Vulcan
+----------------------------------------
+Earth         Kirk Spock
+Vulcan        McCoy
+  Enterprise
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth         Kirk Spock
+Vulcan        McCoy
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk Spock
+  Enterprise
+Vulcan        McCoy
+----------------------------------------
+Spock boarding Enterprise at Earth
+----------------------------------------
+Earth         Kirk
+  Enterprise  Spock
+Vulcan        McCoy
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         Kirk
+Vulcan        McCoy
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth         Kirk
+Vulcan        McCoy
+  Enterprise  Spock
+----------------------------------------
+Spock departing Enterprise at Vulcan
+----------------------------------------
+Earth         Kirk
+Vulcan        McCoy Spock
+  Enterprise
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth         Kirk
+Vulcan        McCoy Spock
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk
+  Enterprise
+Vulcan        McCoy Spock
+----------------------------------------
+Kirk boarding Enterprise at Earth
+----------------------------------------
+Earth
+  Enterprise  Kirk
+Vulcan        McCoy Spock
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth
+Vulcan        McCoy Spock
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth
+Vulcan        McCoy Spock
+  Enterprise  Kirk
+----------------------------------------
+Kirk departing Enterprise at Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk McCoy Spock
+  Enterprise
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk McCoy Spock
+----------------------------------------
