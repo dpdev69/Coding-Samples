@@ -2,7 +2,6 @@
   Name: Emmanuel Taylor
   UID: 111615834
   Directory ID: etaylor5
-
   CMSC216 Project 2: Hashtable I
   hashtable.c
 */
