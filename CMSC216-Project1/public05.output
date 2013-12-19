@@ -1,0 +1,2 @@
+is_address_in_prefix for addr(0x80088008), prefix(0x80080000), prefix length(16) is 1
+is_address_in_prefix for addr(0x80088008), prefix(0x80080000), prefix length(32) is 0
