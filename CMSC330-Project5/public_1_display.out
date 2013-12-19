@@ -1,0 +1,34 @@
+% ruby space.rb display public_1.out
+----------------------------------------
+Earth         Kirk
+Vulcan
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk
+  Enterprise
+Vulcan
+----------------------------------------
+Kirk boarding Enterprise at Earth
+----------------------------------------
+Earth
+  Enterprise  Kirk
+Vulcan
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth
+Vulcan
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth
+Vulcan
+  Enterprise  Kirk
+----------------------------------------
+Kirk departing Enterprise at Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk
+  Enterprise
+----------------------------------------
