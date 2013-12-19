@@ -1,0 +1,57 @@
+% ruby space.rb simulate public_5.in 
+=== Starports ===
+Earth 2
+Vulcan 1
+Romulus 1
+=== Starships ===
+Enterprise 2
+Voyager 1
+=== Travelers ===
+Kirk Earth Vulcan Earth 
+Spock Vulcan Earth Romulus 
+McCoy Earth Romulus 
+=== Output ===
+Enterprise docking at Earth
+Voyager docking at Earth
+  Kirk boarding Enterprise at Earth
+  McCoy boarding Enterprise at Earth
+Enterprise departing from Earth
+Voyager departing from Earth
+Enterprise docking at Vulcan
+Voyager docking at Vulcan
+  Spock boarding Voyager at Vulcan
+  Kirk departing Enterprise at Vulcan
+Enterprise departing from Vulcan
+Voyager departing from Vulcan
+Enterprise docking at Romulus
+  McCoy departing Enterprise at Romulus
+Enterprise departing from Romulus
+Voyager docking at Romulus
+Enterprise docking at Earth
+Voyager departing from Romulus
+Enterprise departing from Earth
+Voyager docking at Earth
+Enterprise docking at Vulcan
+  Spock departing Voyager at Earth
+  Kirk boarding Enterprise at Vulcan
+Voyager departing from Earth
+Enterprise departing from Vulcan
+Voyager docking at Vulcan
+Enterprise docking at Romulus
+Voyager departing from Vulcan
+Enterprise departing from Romulus
+Voyager docking at Romulus
+Enterprise docking at Earth
+Voyager departing from Romulus
+  Spock boarding Enterprise at Earth
+  Kirk departing Enterprise at Earth
+Enterprise departing from Earth
+Voyager docking at Earth
+Enterprise docking at Vulcan
+Voyager departing from Earth
+Enterprise departing from Vulcan
+Enterprise docking at Romulus
+Voyager docking at Vulcan
+  Spock departing Enterprise at Romulus
+Voyager departing from Vulcan
+Enterprise departing from Romulus
