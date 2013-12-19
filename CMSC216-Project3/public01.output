@@ -1,0 +1,14 @@
+Table size: 5
+Not empty
+Value for John 1
+Removing Peggy: 1
+Displaying Table
+Key_count: 1
+Table_size: 5
+Key: John, value: 1
+After clearing
+Empty table
+Displaying Table
+Key_count: 0
+Table_size: 5
+Empty table
