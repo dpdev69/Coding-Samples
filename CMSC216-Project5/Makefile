@@ -23,3 +23,4 @@ parser.tab.o: parser.tab.c parser.tab.h
 
 executor.o: executor.c executor.h command.h
 	$(CC) $(CFLAGS) -c executor.c
+
