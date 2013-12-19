@@ -1,0 +1,320 @@
+% ruby space.rb display public_5.out 
+----------------------------------------
+Earth         Kirk McCoy 
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk McCoy 
+  Enterprise  
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Voyager docking at Earth
+----------------------------------------
+Earth         Kirk McCoy 
+  Enterprise  
+  Voyager     
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Kirk boarding Enterprise at Earth
+----------------------------------------
+Earth         McCoy 
+  Enterprise  Kirk 
+  Voyager     
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+McCoy boarding Enterprise at Earth
+----------------------------------------
+Earth         
+  Enterprise  Kirk McCoy 
+  Voyager     
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         
+  Voyager     
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Voyager departing from Earth
+----------------------------------------
+Earth         
+Vulcan        Spock 
+Romulus       
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth         
+Vulcan        Spock 
+  Enterprise  Kirk McCoy 
+Romulus       
+----------------------------------------
+Voyager docking at Vulcan
+----------------------------------------
+Earth         
+Vulcan        Spock 
+  Enterprise  Kirk McCoy 
+  Voyager     
+Romulus       
+----------------------------------------
+Spock boarding Voyager at Vulcan
+----------------------------------------
+Earth         
+Vulcan        
+  Enterprise  Kirk McCoy 
+  Voyager     Spock 
+Romulus       
+----------------------------------------
+Kirk departing Enterprise at Vulcan
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+  Enterprise  McCoy 
+  Voyager     Spock 
+Romulus       
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+  Voyager     Spock 
+Romulus       
+----------------------------------------
+Voyager departing from Vulcan
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       
+----------------------------------------
+Enterprise docking at Romulus
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       
+  Enterprise  McCoy 
+----------------------------------------
+McCoy departing Enterprise at Romulus
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       McCoy 
+  Enterprise  
+----------------------------------------
+Enterprise departing from Romulus
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       McCoy 
+----------------------------------------
+Voyager docking at Romulus
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       McCoy 
+  Voyager     Spock 
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         
+  Enterprise  
+Vulcan        Kirk 
+Romulus       McCoy 
+  Voyager     Spock 
+----------------------------------------
+Voyager departing from Romulus
+----------------------------------------
+Earth         
+  Enterprise  
+Vulcan        Kirk 
+Romulus       McCoy 
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         
+Vulcan        Kirk 
+Romulus       McCoy 
+----------------------------------------
+Voyager docking at Earth
+----------------------------------------
+Earth         
+  Voyager     Spock 
+Vulcan        Kirk 
+Romulus       McCoy 
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth         
+  Voyager     Spock 
+Vulcan        Kirk 
+  Enterprise  
+Romulus       McCoy 
+----------------------------------------
+Spock departing Voyager at Earth
+----------------------------------------
+Earth         Spock 
+  Voyager     
+Vulcan        Kirk 
+  Enterprise  
+Romulus       McCoy 
+----------------------------------------
+Kirk boarding Enterprise at Vulcan
+----------------------------------------
+Earth         Spock 
+  Voyager     
+Vulcan        
+  Enterprise  Kirk 
+Romulus       McCoy 
+----------------------------------------
+Voyager departing from Earth
+----------------------------------------
+Earth         Spock 
+Vulcan        
+  Enterprise  Kirk 
+Romulus       McCoy 
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth         Spock 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Voyager docking at Vulcan
+----------------------------------------
+Earth         Spock 
+Vulcan        
+  Voyager     
+Romulus       McCoy 
+----------------------------------------
+Enterprise docking at Romulus
+----------------------------------------
+Earth         Spock 
+Vulcan        
+  Voyager     
+Romulus       McCoy 
+  Enterprise  Kirk 
+----------------------------------------
+Voyager departing from Vulcan
+----------------------------------------
+Earth         Spock 
+Vulcan        
+Romulus       McCoy 
+  Enterprise  Kirk 
+----------------------------------------
+Enterprise departing from Romulus
+----------------------------------------
+Earth         Spock 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Voyager docking at Romulus
+----------------------------------------
+Earth         Spock 
+Vulcan        
+Romulus       McCoy 
+  Voyager     
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Spock 
+  Enterprise  Kirk 
+Vulcan        
+Romulus       McCoy 
+  Voyager     
+----------------------------------------
+Voyager departing from Romulus
+----------------------------------------
+Earth         Spock 
+  Enterprise  Kirk 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Spock boarding Enterprise at Earth
+----------------------------------------
+Earth         
+  Enterprise  Kirk Spock 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Kirk departing Enterprise at Earth
+----------------------------------------
+Earth         Kirk 
+  Enterprise  Spock 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Voyager docking at Earth
+----------------------------------------
+Earth         Kirk 
+  Voyager     
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth         Kirk 
+  Voyager     
+Vulcan        
+  Enterprise  Spock 
+Romulus       McCoy 
+----------------------------------------
+Voyager departing from Earth
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+  Enterprise  Spock 
+Romulus       McCoy 
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+Romulus       McCoy 
+----------------------------------------
+Enterprise docking at Romulus
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+Romulus       McCoy 
+  Enterprise  Spock 
+----------------------------------------
+Voyager docking at Vulcan
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+  Voyager     
+Romulus       McCoy 
+  Enterprise  Spock 
+----------------------------------------
+Spock departing Enterprise at Romulus
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+  Voyager     
+Romulus       McCoy Spock 
+  Enterprise  
+----------------------------------------
+Voyager departing from Vulcan
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+Romulus       McCoy Spock 
+  Enterprise  
+----------------------------------------
+Enterprise departing from Romulus
+----------------------------------------
+Earth         Kirk 
+Vulcan        
+Romulus       McCoy Spock 
+----------------------------------------
