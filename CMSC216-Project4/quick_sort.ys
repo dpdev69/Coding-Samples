@@ -5,207 +5,207 @@
 #
 # quick_sort.ys
 
-MAIN:	irmovl	$0x1000, %esp		# Initialize the stack pointer.
+MAIN:	  irmovl	$0x1000, %esp		# Initialize the stack pointer.
 
-	rdint	%eax		        # Reads in an integer into %eax.
-	irmovl	$500, %ebx	   	# Used to represent max array size.
-	andl	%eax, %eax		# Bitwise and on %eax and %eax.
-	je	END   			# If equal to zero, jump to end.
+      	rdint	  %eax		        # Reads in an integer into %eax.
+	      irmovl	$500, %ebx	   	# Used to represent max array size.
+	      andl	  %eax, %eax	  	# Bitwise and on %eax and %eax.
+	      je    	END             # If equal to zero, jump to end.
 
-	subl	%eax, %ebx	        # Check if less than max array size.
-	jl	END   			# If less than 0, jump to end.
+	      subl  	%eax, %ebx	    # Check if less than max array size.
+	      jl	    END   			    # If less than 0, jump to end.
 
-	pushl	%eax			# Pushes %eax onto the stack.
-	call	READ		        # Calls the function READ.
-	popl    %eax			# Removes %eax from the stack.
-	irmovl	$1, %ebx		# Places integer 1 into %ebx.
-	subl	%ebx, %eax		# Updating %eax.
-	irmovl	$0, %ebx		# Places integer 0 into %ebx.
-	pushl	%ebx			# Pushes %ebx onto the stack.
-	pushl	%eax			# Pushes %eax onto the stack
-	call	SORT    	        # Calls the function SORT.
-	popl	%eax			# Removes %eax from the stack.
-	popl	%ebx			# Removes %ebx from the stack.
-	pushl	%eax	   		# Pushes %eax onto the stack
-	irmovl	$0, %ebx		# Places integer 0 into %ebx.
-	call	PRINTARRAY  		# Calls the function PRINTARRAY.
-	popl	%eax			# Removes %eax from the stack.
-	halt				# Ends the program.
+      	pushl 	%eax		      	# Pushes %eax onto the stack.
+      	call	  READ		        # Calls the function READ.
+      	popl    %eax		      	# Removes %eax from the stack.
+      	irmovl	$1, %ebx	    	# Places integer 1 into %ebx.
+      	subl  	%ebx, %eax	  	# Updating %eax.
+      	irmovl	$0, %ebx    		# Places integer 0 into %ebx.
+      	pushl	  %ebx      			# Pushes %ebx onto the stack.
+      	pushl	  %eax		      	# Pushes %eax onto the stack
+      	call	  SORT    	      # Calls the function SORT.
+      	popl	  %eax	      		# Removes %eax from the stack.
+      	popl	  %ebx      			# Removes %ebx from the stack.
+      	pushl	  %eax	       		# Pushes %eax onto the stack
+      	irmovl	$0, %ebx    		# Places integer 0 into %ebx.
+      	call  	PRINTARRAY  		# Calls the function PRINTARRAY.
+      	popl	  %eax        		# Removes %eax from the stack.
+      	halt			            	# Ends the program.
 	
-READ:	pushl	%ebp		        # Saving the old frame pointer.
-	rrmovl	%esp, %ebp      	# Setting the new frame pointer.
+READ:	  pushl	  %ebp		        # Saving the old frame pointer.
+	      rrmovl	%esp, %ebp      # Setting the new frame pointer.
 
-	irmovl	$4, %eax		# Places the value 4 into %eax.
-	subl	%eax, %esp	        # Subtracting %eax from %esp to find it.
-	mrmovl	8(%ebp), %ecx	        # Retrieving the parameter.
-	irmovl	$0, %ebx 		# Places the value 0 into %ebx.
-	rmmovl	%ebx, -4(%ebp)		# Updating memory.
-	mrmovl	MYDATA, %ebx		# Moving MYDATA into %ebx.
-	jmp	RINT			# Jump to RINT.
+      	irmovl	$4, %eax	    	# Places the value 4 into %eax.
+      	subl	  %eax, %esp	    # Subtracting %eax from %esp to find it.
+      	mrmovl	8(%ebp), %ecx	  # Retrieving the parameter.
+      	irmovl	$0, %ebx 	    	# Places the value 0 into %ebx.
+      	rmmovl	%ebx, -4(%ebp)	# Updating memory.
+      	mrmovl	MYDATA, %ebx		# Moving MYDATA into %ebx.
+      	jmp	    RINT			      # Jump to RINT.
 
-RINT:	rdint	%edx			# Reads an integer into %edx.
-	rmmovl	%edx, 0(%ebx)		# Places %edx into memory.
-	addl	%eax, %ebx		# Updating %ebx with addition.
-	mrmovl	-4(%ebx), %edx		# Moving memory into %edx.
+RINT:	  rdint	  %edx      			# Reads an integer into %edx.
+      	rmmovl	%edx, 0(%ebx)		# Places %edx into memory.
+      	addl	  %eax, %ebx  		# Updating %ebx with addition.
+      	mrmovl	-4(%ebx), %edx	# Moving memory into %edx.
+      
+      	irmovl	$1, %edi	       # Increment variable.
+      	mrmovl	-4(%ebp), %esi	 # Retrieving the local variable.
+      	addl	  %edi, %esi	     # Increment takes place.
+      	rmmovl	%esi, -4(%ebp) 	 # Stores value within memory.
+      	mrmovl	8(%ebp), %edx		 # Updates the register from memory.
+      	subl	  %edx, %esi	     # Checking i against number of elements.
+      	jl	    RINT			       # Jumps to RINT if less than 0.
+      
+      	rrmovl	%ebp, %esp	  	# Resetting the stack pointer.
+      	popl	  %ebp  		    	# Restoring the old frame pointer.
+      	ret				              # Exits.
 
-	irmovl	$1, %edi	        # Increment variable.
-	mrmovl	-4(%ebp), %esi	        # Retrieving the local variable.
-	addl	%edi, %esi	        # Increment takes place.
-	rmmovl	%esi, -4(%ebp) 		# Stores value within memory.
-	mrmovl	8(%ebp), %edx		# Updates the register from memory.
-	subl	%edx, %esi	        # Checking i against number of elements.
-	jl	RINT			# Jumps to RINT if less than 0.
+END:	  halt				            # Ends the program.
 
-	rrmovl	%ebp, %esp		# Resetting the stack pointer.
-	popl	%ebp  			# Restoring the old frame pointer.
-	ret				# Exits.
+SORT:	  pushl	  %ebp		        # Saving the old frame pointer.
+      	rrmovl	%esp, %ebp	    # Setting the new frame pointer.
+      
+      	mrmovl	8(%ebp), %eax	  # Retrieving the last variable.
+      	mrmovl	12(%ebp), %ebx	# Retrieving the first variable.
+      	
+      	mrmovl	MYDATA, %esi	  # Establishing a pointer to the array.
+      	rrmovl	%eax, %edx	 	  # Makes a copy of %eax within %edx.  
+      	addl	  %ebx, %edx	    # Represents the left + the right.
+      	irmovl	$2, %ecx	    	# Stores integer 2 into %ecx.
+      	divl	  %ecx, %edx	    # Represents left + right div 2.
+      	irmovl	$4, %ecx	    	# Stores integer 4 into %ecx.
+      	multl	  %ecx, %edx	    # Multiplies %ecx and %edx.
+      	addl	  %edx, %esi	    # Reresents ARR = ARR + (L + R)/2
+      	mrmovl	0(%esi), %edx	  # The pivot equals pointer to array.
+      	irmovl	$12, %esi		    # Places integer 12 into %esi.	    
+      
+      	subl	  %esi, %esp	    # Making space for local varables.
+      	rmmovl	%eax, -4(%ebp) 	# Stores j.
+      	rmmovl	%ebx, -8(%ebp) 	# Stores i.
+      	rmmovl	%edx, -12(%ebp)	# Stores the pivot.
+      	jmp 	  CHECK 			    # Jumps to CHECK.
 
-END:	halt				# Ends the program.
-
-SORT:	pushl	%ebp		        # Saving the old frame pointer.
-	rrmovl	%esp, %ebp	        # Setting the new frame pointer.
-
-	mrmovl	8(%ebp), %eax	   	# Retrieving the last variable.
-	mrmovl	12(%ebp), %ebx	        # Retrieving the first variable.
-	
-	mrmovl	MYDATA, %esi	        # Establishing a pointer to the array.
-	rrmovl	%eax, %edx	 	# Makes a copy of %eax within %edx.  
-	addl	%ebx, %edx	        # Represents the left + the right.
-	irmovl	$2, %ecx		# Stores integer 2 into %ecx.
-	divl	%ecx, %edx	    	# Represents left + right div 2.
-	irmovl	$4, %ecx	    	# Stores integer 4 into %ecx.
-	multl	%ecx, %edx	        # Multiplies %ecx and %edx.
-	addl	%edx, %esi	        # Reresents ARR = ARR + (L + R)/2
-	mrmovl	0(%esi), %edx	    	# The pivot equals pointer to array.
-	irmovl	$12, %esi		# Places integer 12 into %esi.	    
-
-	subl	%esi, %esp	        # Making space for local varables.
-	rmmovl	%eax, -4(%ebp) 		# Stores j.
-	rmmovl	%ebx, -8(%ebp) 		# Stores i.
-	rmmovl	%edx, -12(%ebp)		# Stores the pivot.
-	jmp 	CHECK 			# Jumps to CHECK.
-
-CHECK:	mrmovl	-4(%ebp), %eax	        # Retrieving the local variables.
-	mrmovl	-8(%ebp), %ebx		# Retrieving the local variables.    
-	subl	%ebx, %eax	    	# Checks if less than.
-	jl	RECUR 			# If true, jump to RECUR.
-	jmp     LPIVOT			# Else jump to LPIVOT.
+CHECK:	mrmovl	-4(%ebp), %eax	# Retrieving the local variables.
+      	mrmovl	-8(%ebp), %ebx	# Retrieving the local variables.    
+      	subl  	%ebx, %eax	    # Checks if less than.
+      	jl	    RECUR 			    # If true, jump to RECUR.
+      	jmp     LPIVOT			    # Else jump to LPIVOT.
 
 LPIVOT:	mrmovl	MYDATA, %esi		# Pointer to the array.
-	irmovl	$4, %ecx	    	# Represents the increment value.
-	mrmovl	-8(%ebp), %eax          # Retrieving local variable.
-	multl	%eax, %ecx		# Multiplies %eax and %ecx.
-	addl	%ecx, %esi	        # Finds the array index.
-	mrmovl	0(%esi), %ecx		# Updates %ecx from memory.
-	mrmovl	-12(%ebp), %edx         # Retrieving the pivot.
-	subl	%ecx, %edx	        # Checking if array index < pivot.
-	jg	IADD	   	    	# If greater, jump to IADD.
-	jmp	RPIVOT		        # Else jump to RPIVOT.
+      	irmovl	$4, %ecx	    	# Represents the increment value.
+      	mrmovl	-8(%ebp), %eax  # Retrieving local variable.
+      	multl	  %eax, %ecx		  # Multiplies %eax and %ecx.
+      	addl  	%ecx, %esi	    # Finds the array index.
+      	mrmovl	0(%esi), %ecx		# Updates %ecx from memory.
+      	mrmovl	-12(%ebp), %edx # Retrieving the pivot.
+      	subl	  %ecx, %edx	    # Checking if array index < pivot.
+      	jg	    IADD	   	    	# If greater, jump to IADD.
+      	jmp	    RPIVOT		      # Else jump to RPIVOT.
 
-IADD:	irmovl	$1, %ecx	    	# Stores integer 1 into %ecx.
-	mrmovl	-8(%ebp), %ebx	    	# Retrieving i from memory.
-	addl	%ecx, %ebx	    	# Adding i and %ecx.
-	rmmovl	%ebx, -8(%ebp) 		# Stores result in memory.
-	jmp	LPIVOT			# Jumps back to LPIVOT.
+IADD:	  irmovl	$1, %ecx	    	# Stores integer 1 into %ecx.
+      	mrmovl	-8(%ebp), %ebx	# Retrieving i from memory.
+      	addl	  %ecx, %ebx	    # Adding i and %ecx.
+      	rmmovl	%ebx, -8(%ebp) 	# Stores result in memory.
+      	jmp	    LPIVOT			    # Jumps back to LPIVOT.
 
 RPIVOT: mrmovl	MYDATA, %esi		# Pointer to the array.
-	irmovl	$4, %ecx	        # Represents the increment value.
-	mrmovl	-4(%ebp), %eax	        # Retrieving the local variable.
-	multl	%eax, %ecx		# Multiplies %eax and %ecx.
-	addl	%ecx,  %esi	        # Finds array index for j.
-	mrmovl	0(%esi), %ecx		# Updates %ecx from memory.
-	mrmovl	-12(%ebp), %edx         # Retrieving the pivot.
-	subl	%ecx, %edx	        # Checking if array index > pivot.
-	jl	JADD		        # If less than, jump to JADD.
-	mrmovl	-4(%ebp), %eax	        # Retrieving j.
-	mrmovl	-8(%ebp), %ebx	        # Retrieving i.
-	subl	%eax, %ebx	        # Subtracting j and i.
-	jle	SWAP  			# If <= jump to SWAP.
-	jmp	CHECK			# Else jump to CHECK.
+      	irmovl	$4, %ecx	      # Represents the increment value.
+      	mrmovl	-4(%ebp), %eax	# Retrieving the local variable.
+      	multl	  %eax, %ecx  		# Multiplies %eax and %ecx.
+      	addl	  %ecx,  %esi	    # Finds array index for j.
+      	mrmovl	0(%esi), %ecx		# Updates %ecx from memory.
+      	mrmovl	-12(%ebp), %edx # Retrieving the pivot.
+      	subl	  %ecx, %edx	    # Checking if array index > pivot.
+      	jl	    JADD		        # If less than, jump to JADD.
+      	mrmovl	-4(%ebp), %eax	# Retrieving j.
+      	mrmovl	-8(%ebp), %ebx	# Retrieving i.
+      	subl	  %eax, %ebx	    # Subtracting j and i.
+      	jle	    SWAP  			    # If <= jump to SWAP.
+      	jmp	    CHECK			      # Else jump to CHECK.
 
-JADD:	irmovl	$1, %ecx	        # Stores integer 1 into %ecx.
-	mrmovl	-4(%ebp), %eax	        # Retrieving j from memory.
-	subl	%ecx, %eax	        # Subtracting j and %ecx.
-	rmmovl	%eax, -4(%ebp)          # Stores the result in memory.
-	jmp	RPIVOT			# Jumps back to RPIVOT.
+JADD:	  irmovl	$1, %ecx	      # Stores integer 1 into %ecx.
+      	mrmovl	-4(%ebp), %eax	# Retrieving j from memory.
+      	subl	  %ecx, %eax	    # Subtracting j and %ecx.
+      	rmmovl	%eax, -4(%ebp)  # Stores the result in memory.
+      	jmp	    RPIVOT			    # Jumps back to RPIVOT.
 
-SWAP:	mrmovl	MYDATA, %esi	        # Pointer to the array.
-	irmovl	$4, %edx	        # Fjnd array index.
-	mrmovl	-8(%ebp), %ebx	        # Storing i in memory.
-	multl	%edx, %ebx		# Multiplying %edx and %ebx.
-	addl	%esi, %ebx		# Adding %esi and %ebx.
+SWAP:	  mrmovl	MYDATA, %esi	  # Pointer to the array.
+      	irmovl	$4, %edx	      # Find array index.
+      	mrmovl	-8(%ebp), %ebx	# Storing i in memory.
+      	multl	  %edx, %ebx  		# Multiplying %edx and %ebx.
+      	addl	  %esi, %ebx  		# Adding %esi and %ebx.
+      
+      	mrmovl	0(%ebx), %ecx	  # Storing the array index.
+      	mrmovl	-4(%ebp), %eax  # Finding array index for j.
+      	multl	  %edx, %eax		  # Multiplying %edx and %eax.
+      	addl  	%esi, %eax	    # Point to array index for j.
+      
+      	mrmovl	0(%eax), %edx	  # Storing the array index j.	    
+      	rmmovl	%ecx, 0(%eax)   # Setting the two indexes equal.
+      	rmmovl	%edx, 0(%ebx)   # Updating within memory.
+      	irmovl	$1, %edx		    # Storing integer 1 into %edx.	    
+      	mrmovl	-4(%ebp), %eax	# Retrieving j.
+      	mrmovl	-8(%ebp), %ebx	# Retrieving i.
+      	addl   	%edx, %ebx	    # Incrementation for i takes place.
+      	subl  	%edx, %eax	    # Decrementation for j takes place.
+      	rmmovl	%eax, -4(%ebp)  # Stores the local parameters.
+      	rmmovl	%ebx, -8(%ebp)	# Updates within memory.
+      	jmp   	CHECK 			    # Jumps back to CHECK.
 
-	mrmovl	0(%ebx), %ecx	        # Storing the array index.
-	mrmovl	-4(%ebp), %eax          # Finding array index for j.
-	multl	%edx, %eax		# Multiplying %edx and %eax.
-	addl	%esi, %eax	        # Point to array index for j.
+RECUR:	call	  LSORT           # Calls the recursion LSORT.
+      	call	  RSORT		        # Calls the recursion RSORT.
+      	rrmovl	%ebp, %esp	    # Resetting the stack pointer.
+      	popl	  %ebp       			# Restoring the old frame pointer.
+      	ret				              # Exits.
 
-	mrmovl	0(%eax), %edx	        # Storing the array index j.	    
-	rmmovl	%ecx, 0(%eax)           # Setting the two indexes equal.
-	rmmovl	%edx, 0(%ebx)           # Updating within memory.
-	irmovl	$1, %edx		# Storing integer 1 into %edx.	    
-	mrmovl	-4(%ebp), %eax	        # Retrieving j.
-	mrmovl	-8(%ebp), %ebx	        # Retrieving i.
-	addl	%edx, %ebx	        # Incrementation for i takes place.
-	subl	%edx, %eax	        # Decrementation for j takes place.
-	rmmovl	%eax, -4(%ebp)          # Stores the local parameters.
-	rmmovl	%ebx, -8(%ebp)		# Updates within memory.
-	jmp 	CHECK 			# Jumps back to CHECK.
+LSORT:  mrmovl	12(%ebp), %eax	# Retrieving the left parameter.
+      	mrmovl	-4(%ebp), %ebx	# Retrieving j from memory.
+      	subl  	%ebx, %eax	    # Represents left - j.
+      	jl	    LRSORT			    # If less, jump to LRSORT.
+      	ret			              	# Exits.
 
-RECUR:	call	LSORT                   # Calls the recursion LSORT.
-	call	RSORT		        # Calls the recursion RSORT.
-	rrmovl	%ebp, %esp	        # Resetting the stack pointer.
-	popl	%ebp  			# Restoring the old frame pointer.
-	ret				# Exits.
+LRSORT:	mrmovl	12(%ebp), %eax  # Retrieving the left parameter.
+      	pushl	  %eax	   	      # Pushes %eax onto the stack.
+      	pushl	  %ebx	    	   	# Pushes %ebx onto the stack.
+      	call	  SORT		        # Calls the function SORT.
+      	popl	  %eax		   	    # Removes %eax from the stack.
+      	popl	  %eax		      	# Removes %eax from the stack.
+      	ret				              # Exits.
 
-LSORT:  mrmovl	12(%ebp), %eax	   	# Retrieving the left parameter.
-	mrmovl	-4(%ebp), %ebx	   	# Retrieving j from memory.
-	subl	%ebx, %eax	        # Represents left - j.
-	jl	LRSORT			# If less, jump to LRSORT.
-	ret				# Exits.
+RSORT:	mrmovl	8(%ebp), %eax	  # Retrieving the right parameter.
+      	mrmovl	-8(%ebp), %ebx	# Retrieving i from memory.
+      	subl	  %ebx, %eax	    # Represents i - right.
+      	jg	    RRSORT	   	    # If greater, jump to RRSORT.
+      	ret				              # Exits.
 
-LRSORT:	mrmovl	12(%ebp), %eax   	# Retrieving the left parameter.
-	pushl	%eax	   	        # Pushes %eax onto the stack.
-	pushl	%ebx		   	# Pushes %ebx onto the stack.
-	call	SORT		        # Calls the function SORT.
-	popl	%eax		   	# Removes %eax from the stack.
-	popl	%eax		   	# Removes %eax from the stack.
-	ret				# Exits.
-
-RSORT:	mrmovl	8(%ebp), %eax	        # Retrieving the right parameter.
-	mrmovl	-8(%ebp), %ebx	        # Retrieving i from memory.
-	subl	%ebx, %eax	        # Represents i - right.
-	jg	RRSORT	   	        # If greater, jump to RRSORT.
-	ret				# Exits.
-
-RRSORT:	mrmovl	8(%ebp), %eax	        # Retrieving the right parameter.
-	pushl	%ebx	   	        # Pushes %ebx onto the stack.
-	pushl	%eax			# Pushes %eax onto the stack.
-	call	SORT		   	# Calls the function SORT.
-	popl	%eax		   	# Removes %eax from the stack.
-	popl	%eax			# Removes %eax from the stack.
-	ret				# Exits.
+RRSORT:	mrmovl	8(%ebp), %eax	  # Retrieving the right parameter.
+      	pushl	  %ebx	   	      # Pushes %ebx onto the stack.
+      	pushl	  %eax			      # Pushes %eax onto the stack.
+      	call	  SORT		   	    # Calls the function SORT.
+      	popl	  %eax		   	    # Removes %eax from the stack.
+      	popl	  %eax			      # Removes %eax from the stack.
+      	ret				              # Exits.
 
 PRINTARRAY:	
-	mrmovl	4(%esp), %eax		# Retrieving the size.
-	subl	%ebx, %eax	        # Subtracting i from size.
-	jge	PRINT 			# If greater, jump to PRINT.
-	irmovl	$10, %esi   	        # Places new line character into %esi.
-	wrch	%esi 			# Prints the new line character.
-	ret				# Exits.
+      	mrmovl	4(%esp), %eax		# Retrieving the size.
+      	subl	  %ebx, %eax	    # Subtracting i from size.
+      	jge	    PRINT 			    # If greater, jump to PRINT.
+      	irmovl	$10, %esi   	  # Places new line character into %esi.
+      	wrch	  %esi 			      # Prints the new line character.
+      	ret				              # Exits.
 
-PRINT:	irmovl	$4, %esi   	        # Places integer 4 into %esi.
-	multl	%ebx, %esi              # Multiplies %ebx and %esi.
-	mrmovl	MYDATA,   %edi		# Moves MYDATA to %edi.
-	addl	%esi, %edi		# Adds %esi and %edi and updates.
-	mrmovl	0(%edi), %esi  	        # Locating the array index.
-	wrint	%esi	   	        # Printing the array index.
-	irmovl	$32, %esi	        # Places the space character into %esi.
-	wrch	%esi 			# Prints out the space character.
-	irmovl	$1, %esi	        # Places integer 1 into %esi.
-	addl	%esi, %ebx		# Increments i.
-	jmp	PRINTARRAY 	        # Jumps back to PRINTARRAY.
+PRINT:	irmovl	$4, %esi   	    # Places integer 4 into %esi.
+      	multl	  %ebx, %esi      # Multiplies %ebx and %esi.
+      	mrmovl	MYDATA, %edi		# Moves MYDATA to %edi.
+      	addl	  %esi, %edi	  	# Adds %esi and %edi and updates.
+      	mrmovl	0(%edi), %esi  	# Locating the array index.
+      	wrint	  %esi	   	      # Printing the array index.
+      	irmovl	$32, %esi	      # Places the space character into %esi.
+      	wrch  	%esi 			      # Prints out the space character.
+      	irmovl	$1, %esi	      # Places integer 1 into %esi.
+      	addl	  %esi, %ebx		  # Increments i.
+      	jmp	    PRINTARRAY 	    # Jumps back to PRINTARRAY.
 
 MYDATA: .align 4
-	.long 0
-	.long 4
+      	.long 0
+      	.long 4
