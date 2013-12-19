@@ -209,3 +209,4 @@ PRINT:	irmovl	$4, %esi   	    # Places integer 4 into %esi.
 MYDATA: .align 4
       	.long 0
       	.long 4
+
