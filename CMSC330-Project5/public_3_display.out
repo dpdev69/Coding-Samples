@@ -1,0 +1,74 @@
+% ruby space.rb display public_3.out
+----------------------------------------
+Earth         Kirk McCoy
+Vulcan        Spock
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth         Kirk McCoy
+  Enterprise
+Vulcan        Spock
+----------------------------------------
+Kirk boarding Enterprise at Earth
+----------------------------------------
+Earth         McCoy
+  Enterprise  Kirk
+Vulcan        Spock
+----------------------------------------
+McCoy boarding Enterprise at Earth
+----------------------------------------
+Earth
+  Enterprise  Kirk McCoy
+Vulcan        Spock
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth
+Vulcan        Spock
+----------------------------------------
+Enterprise docking at Vulcan
+----------------------------------------
+Earth
+Vulcan        Spock
+  Enterprise  Kirk McCoy
+----------------------------------------
+McCoy departing Enterprise at Vulcan
+----------------------------------------
+Earth
+Vulcan        McCoy Spock
+  Enterprise  Kirk
+----------------------------------------
+Kirk departing Enterprise at Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk McCoy Spock
+  Enterprise
+----------------------------------------
+Spock boarding Enterprise at Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk McCoy
+  Enterprise  Spock
+----------------------------------------
+Enterprise departing from Vulcan
+----------------------------------------
+Earth
+Vulcan        Kirk McCoy
+----------------------------------------
+Enterprise docking at Earth
+----------------------------------------
+Earth
+  Enterprise  Spock
+Vulcan        Kirk McCoy
+----------------------------------------
+Spock departing Enterprise at Earth
+----------------------------------------
+Earth         Spock
+  Enterprise
+Vulcan        Kirk McCoy
+----------------------------------------
+Enterprise departing from Earth
+----------------------------------------
+Earth         Spock
+Vulcan        Kirk McCoy
+----------------------------------------
