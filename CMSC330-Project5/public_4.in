@@ -1,0 +1,34 @@
+% ruby space.rb simulate public_4.in
+=== Starports ===
+Earth 1
+Vulcan 1
+=== Starships ===
+Enterprise 2
+Voyager 1
+=== Travelers ===
+Kirk Earth Vulcan
+Spock Earth Vulcan
+McCoy Earth Vulcan
+=== Output ===
+Enterprise docking at Earth
+Voyager docking at Earth
+  Kirk boarding Enterprise at Earth
+  Spock boarding Enterprise at Earth
+  McCoy boarding Voyager at Earth
+Enterprise departing from Earth
+Voyager departing from Earth
+Enterprise docking at Vulcan
+Voyager docking at Vulcan
+Enterprise departing from Vulcan
+  McCoy departing Voyager at Vulcan
+Enterprise docking at Earth
+Voyager departing from Vulcan
+Voyager docking at Earth
+Enterprise departing from Earth
+Voyager departing from Earth
+Enterprise docking at Vulcan
+Voyager docking at Vulcan
+  Spock departing Enterprise at Vulcan
+  Kirk departing Enterprise at Vulcan
+Enterprise departing from Vulcan
+Voyager departing from Vulcan
