@@ -1,0 +1,3 @@
+index_of_first_bit_different for addr1(0x80088008), and addr2(0x00000000) is 1
+index_of_first_bit_different for addr1(0x40088008), and addr2(0x00000000) is 2
+index_of_first_bit_different for addr1(0x40088008), and addr2(0x40088008) is -1
