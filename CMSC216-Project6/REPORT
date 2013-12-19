@@ -1,0 +1,91 @@
+/**************************************/
+/* Emmanuel Taylor                    */
+/* CMSC216: Multithreaded Mergesort   */
+/* UID: 111615834                     */
+/* Directory ID: etaylor5             */
+/*                                    */
+/* REPORT file                        */
+/**************************************/
+
+1. For each of the nine versions of your mergesort (non-threaded, and 
+   multithreaded with 1 - 8 threads), how long did that version take
+   to sort the numbers, measured by wall clock time, user time, and system time?
+
+Answer: 
+	Command: mergetest 5 2 8 20
+	0 threads: 0.000010 wall; 0.000000 user; 0.000000 sys
+	1 threads: 0.000439 wall; 0.000000 user; 0.001000 sys
+	2 threads: 0.000248 wall; 0.000000 user; 0.000000 sys
+	3 threads: 0.000346 wall; 0.000000 user; 0.000000 sys
+	4 threads: 0.000308 wall; 0.000000 user; 0.000000 sys
+	5 threads: 0.000449 wall; 0.000000 user; 0.000000 sys
+	6 threads: 0.000306 wall; 0.000000 user; 0.000000 sys
+	7 threads: 0.000259 wall; 0.000000 user; 0.000000 sys
+	8 threads: 0.000324 wall; 0.000000 user; 0.001000 sys
+
+	
+2. For four threads, measure performance with three different chunk sizes (wall 
+   clock time, user time, and system time).
+
+Answer:
+	Command: mergetest 5 2 8 10 --- Chunk Size 2
+	0 threads: 0.000010 wall; 0.000000 user; 0.000000 sys
+	1 threads: 0.002675 wall; 0.000000 user; 0.001000 sys
+	2 threads: 0.000238 wall; 0.000000 user; 0.000000 sys
+	3 threads: 0.000483 wall; 0.000000 user; 0.001000 sys
+	4 threads: 0.000421 wall; 0.000000 user; 0.000000 sys
+
+	Command: mergetest 5 3 8 10 --- Chunk Size 3
+	0 threads: 0.000010 wall; 0.000000 user; 0.000000 sys
+	1 threads: 0.000446 wall; 0.000000 user; 0.000000 sys
+	2 threads: 0.000219 wall; 0.000000 user; 0.000000 sys
+	3 threads: 0.000440 wall; 0.000000 user; 0.000000 sys
+	4 threads: 0.000489 wall; 0.000000 user; 0.001000 sys
+
+	Command: mergetest 5 4 8 10 --- Chunk Size 4
+	0 threads: 0.000011 wall; 0.000000 user; 0.000000 sys
+	1 threads: 0.000534 wall; 0.000000 user; 0.001000 sys
+	2 threads: 0.000224 wall; 0.000000 user; 0.000000 sys
+	3 threads: 0.000330 wall; 0.000000 user; 0.000000 sys
+	4 threads: 0.000579 wall; 0.000000 user; 0.001000 sys
+
+3. Measuring wall clock time, what speedup did each of your multithreaded runs
+   obtain compared to the non-threaded mergesort? Speedup is computed as the
+   time for the non-threaded run divided by the time for a multithreaded run.
+
+Answer:
+	Wall Clock Time Speedup
+	1 threads: 0.0227790432801822
+	2 threads: 0.0403225806451613
+	3 threads: 0.0289017341040462
+	4 threads: 0.0324675324675325
+	5 threads: 0.022271714922049
+	6 threads: 0.0326797385620915
+	7 threads: 0.0386100386100386
+	8 threads: 0.0308641975308642
+
+4. Measuring user time, what speedup did each of your multithreaded runs obtain
+   compared to the non-threaded mergesort?
+
+Answer:
+	User Time Speedup
+	1 threads: 0.000000
+	2 threads: 0.000000
+	3 threads: 0.000000
+	4 threads: 0.000000
+	5 threads: 0.000000
+	6 threads: 0.000000
+	7 threads: 0.000000
+	8 threads: 0.000000
+
+5. Explain the relationship between an increase in the number of threads working
+   on a mergesort and the time (both wall clock and user time) required to 
+   perform the sort. In other words, how much speed up is gained by doubling the
+   number of threads? Does this speedup increase at a constant rate as the 
+   number of threads become larger? Why or why not?
+
+Answer:
+	As you increase the number of threads, the wall clock time also 
+	increases. However, speed up does increase as you double the number of
+	threads but the speed up does not increase at a constant rate which
+	could be due to interference.
