@@ -1,0 +1,66 @@
+% ruby space.rb simulate public_6.in 
+=== Starports ===
+Tatooine 1
+Dagobah 1
+Endor 2
+=== Starships ===
+MillenniumFalcon 2
+DeathStar 4
+TieFighter 1
+=== Travelers ===
+Luke Tatooine Dagobah Endor 
+Han Tatooine Endor 
+Leia Tatooine Endor 
+Vader Endor Tatooine Endor 
+=== Output ===
+MillenniumFalcon docking at Tatooine
+DeathStar docking at Tatooine
+  Luke boarding MillenniumFalcon at Tatooine
+DeathStar departing from Tatooine
+  Leia boarding MillenniumFalcon at Tatooine
+DeathStar docking at Dagobah
+MillenniumFalcon departing from Tatooine
+TieFighter docking at Tatooine
+MillenniumFalcon docking at Dagobah
+  Han boarding TieFighter at Tatooine
+DeathStar departing from Dagobah
+TieFighter departing from Tatooine
+  Luke departing MillenniumFalcon at Dagobah
+DeathStar docking at Endor
+MillenniumFalcon departing from Dagobah
+TieFighter docking at Dagobah
+  Vader boarding DeathStar at Endor
+TieFighter departing from Dagobah
+DeathStar departing from Endor
+MillenniumFalcon docking at Endor
+DeathStar docking at Tatooine
+  Leia departing MillenniumFalcon at Endor
+  Vader departing DeathStar at Tatooine
+DeathStar departing from Tatooine
+TieFighter docking at Endor
+MillenniumFalcon departing from Endor
+DeathStar docking at Dagobah
+  Han departing TieFighter at Endor
+MillenniumFalcon docking at Tatooine
+  Luke boarding DeathStar at Dagobah
+TieFighter departing from Endor
+DeathStar departing from Dagobah
+MillenniumFalcon departing from Tatooine
+  Vader boarding MillenniumFalcon at Tatooine
+TieFighter docking at Tatooine
+MillenniumFalcon docking at Dagobah
+DeathStar docking at Endor
+TieFighter departing from Tatooine
+  Luke departing DeathStar at Endor
+TieFighter docking at Dagobah
+DeathStar departing from Endor
+MillenniumFalcon departing from Dagobah
+DeathStar docking at Tatooine
+TieFighter departing from Dagobah
+MillenniumFalcon docking at Endor
+DeathStar departing from Tatooine
+TieFighter docking at Endor
+  Vader departing MillenniumFalcon at Endor
+DeathStar docking at Dagobah
+MillenniumFalcon departing from Endor
+TieFighter departing from Endor
