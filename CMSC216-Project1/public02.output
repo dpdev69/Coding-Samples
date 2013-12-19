@@ -1,0 +1,2 @@
+floor_log8(5) = 0
+floor_log8(111) = 2
