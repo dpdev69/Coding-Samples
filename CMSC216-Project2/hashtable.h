@@ -8,7 +8,6 @@
 #if ! defined(NUM_BUCKETS)
 #define NUM_BUCKETS 5
 #endif
-
 typedef enum { EMPTY, FULL, DELETED } Bucket_state;
 
 typedef struct {
