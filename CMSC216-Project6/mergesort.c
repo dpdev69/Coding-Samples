@@ -291,6 +291,7 @@ void *chunk_remove(void *arg) {
     }
   }
 
+  // Releasing the thread locks.
   pthread_mutex_unlock(&thread_mutex);
   pthread_exit(NULL);
 }
