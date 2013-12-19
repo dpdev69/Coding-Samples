@@ -178,4 +178,3 @@ int index_of_first_bit_different(uint32_t address1, uint32_t address2) {
 
   return return_value;
 }
-
