@@ -1,0 +1,4 @@
+% ruby space.rb verify public_7.in
+% Invalid event: Vader boarding MillenniumFalcon at Tatooine
+%   MillenniumFalcon not at Tatooine
+INVALID
