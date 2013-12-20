@@ -1,0 +1,46 @@
+LAB ASSIGNMENT 2 (due 09/19)
+___________________________
+
+In Lab 2, you learned various plotting techniques and created an exponentially faded 
+version of a given sinusoidal signal.  In this assignment, you will use the 
+so-called Bartlett window to obain a modified sinusoid with symmetric fading
+characteristics.
+
+Your code should generate three signal vectors and plot them in a SINGLE figure
+consisting of THREE subplots, arranged in a column.  The SUBPLOT function should be
+used.  EACH subplot should have labels on the horizontal and vertical axes, as
+well as an appropriate title (e.g., INPUT SIGNAL, WINDOW, OUTPUT SIGNAL).
+
+
+(i) 	Evaluate the signal vector x which contains samples of the sinusoid
+
+		x(t) = cos( 7*pi*t/8 )
+
+	for t = -20:0.01:20 .  Plot x against t in the first subplot.  Calculate number
+	of entries in the vector x, and write the result in comments.
+
+(ii)	Type "help bartlett" to read the docummentation on the function BARTLETT. Use
+	the command
+	
+		w = bartlett(N)
+
+	where N takes a suitable value, to generate a vector w having the same
+	length as x in part (i).  Plot w against t in the second subplot.
+
+(iii) 	Using the transpose operator and element-by-element multiplication (as needed), 
+	"apply" the Bartlett window w to x. This means multiplying each entry of x by
+	the corresponding entry of w.  Denote the resulting vector by y.  Plot y
+	in the third subplot.
+
+______________________________________________________________________________________
+
+Submit a zip/rar package containing the following two files (use exact file names as shown):
+
+lastname_labhw_02.m	M-file containing the MATLAB code and any additional comments or
+			explanations on separate lines preceded by % (comment character).
+			Please put your name and student ID on the first line.
+
+lastname_labhw_02.pdf	Figure saved in PDF format.
+
+The zip/rar package should be named as lastname_labhw_02.zip/rar, and should be submitted to 
+the entry for Lab Assignment 2 on ELMS.  Go to ENEE222 -> Assignments -> Lab 02 Assignment
