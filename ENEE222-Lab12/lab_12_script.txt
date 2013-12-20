@@ -1,0 +1,209 @@
+LAB 12, 12/06/13
+________________
+
+
+1. 	The class of discrete-time linear time-invariant filters known as FIR 
+	(= finite-duration impulse response) are conceptually simple and 
+	provide an excellent introduction to the topic of frequency-selective 
+	filtering.
+
+	An FIR filter acts as a moving average on the filter input sequence 
+	x[n]; the weights, or coefficients, for this averaging operation are 
+	the entries of the vector
+
+	% 	b = [b[0]  b[1]	 ... b[M]]
+
+	Thus the filter output y[n] is given by
+
+	%	y[n] = b[0]*x[n] + b[1]*x[n-1] + ... + b[M]*x[n-M]	(%%%)
+
+
+2.	The frequency response of an FIR filter is 
+
+ 	%	H(exp(j*w)) = b[0] + b[1]*exp(-j*w) + ... + b[M]*exp(-j*M*w)
+
+	and can be easily computed at N (>=M) equally spaced frequencies
+	using a zero-padded DFT.  For example,
+
+
+		b = [4 -2 1 -1 2 -4].' ;	% coefficient vector, M+1=6
+
+		N = 512 ;
+
+		H = fft(b,N) ;
+
+		A = abs(H) ; 	            % magnitude response
+
+		q = angle(H) ;              % phase response
+
+		fnorm = 2*(0:N-1)/N	;       % same as w/pi
+
+		subplot(2,1,1),	plot(fnorm,A), grid
+
+		subplot(2,1,2),	plot(fnorm,q), grid
+
+
+	The linear form of the phase response is due to the odd symmetry
+	in the coefficient vector b.  This feature, also present for even-
+	symmetric vectors b, makes FIR filters suitable for applications
+	where phase fidelity is paramount.  A linear phase response is 
+	equivalent to a uniform time delay by M/2 samples for all frequency
+	components.
+
+	Discontinuities of pi in the phase coincide with zeros in the
+	amplitude response.
+
+
+3.	The design of FIR filters to given specifications is an advanced
+	theoretical topic.  MATLAB provides command-line functions for
+	implementing the two main FIR design methodologies, namely the
+	window-based design (FIR1 function) and the equiripple approximation
+	(FIRPM function).  
+
+	In addition to command-line functions, MATLAB has an excellent
+	GUI for designing FIR and other types of filters. It is invoked by 
+	typing
+
+		fdatool
+
+	For example, we will design a lowpass filter with
+	
+		passband edge: 0.5*pi
+
+		stopband edge: 0.6*pi
+
+		passband ripple: 1 dB
+
+		stopband attenuation: 80 dB	
+
+	- Click on Analysis (menu bar) and select Filter Specifications.
+	  The graph window shows a generic filter frequency response.
+
+	- Under Response type (center left), click on the different filter
+	  types (lowpass, highpass, etc.) and note how the generic response
+	  graph changes accordingly.  Choose lowpass at the end.
+
+	- Under Design Method (bottom left): FIR, Equiripple
+
+	- Under Filter Order: Minimum Order.  This allows us to use explicit
+	  values for the passband ripple and stopband attenuation - the 
+	  more stringent these constraints are, the higher the filter order.
+	  Specifying the filter order only allows relative tradeoffs between 
+	  passband and stopband specs.
+
+	- Frequency Specifications can be given in terms of normalized
+	  frequencies (i.e., fractions of pi) or continuous-time (Hz) 
+	  frequencies if the sampling rate Fs is known.  Note that Fs/2
+	  corresponds to the normalized frequency 1 (i.e., w=pi).  Choose
+	  Normalized frequencies, and set wpass = 0.5, wstop = 0.6.
+
+	- Magnitude Specifications: there is a choice between linear and dB
+	  units.  Choose dB, then set Apass = 1, Astop = 80.
+
+	- Click on Design Filter.
+
+
+4.	The magnitude response of the filter (in dB) is displayed on the graph
+	window.  One can also display other filter features by clicking on
+	Analysis (menu bar) and making a selection from the drop-down menu.
+	Some of these choices are also accessible from the toolbar.
+
+	- Select Analysis Parameters, then change Magnitude (db) to 
+	  Magnitude and note how the graph changes. Change back to
+	  Magnitude (db).
+
+	- Display the phase response.
+
+	- Display the magnitude and phase responses together.
+
+	- Display the impulse response (stem plot of the coefficient vector)
+
+	- Display the coefficient vector ("Numerator")
+
+	From the File menu, choose Export to save the coefficient vector as 
+	variable in the workspace.  Call it b.
+
+
+5.	For an application involving the filter we just designed, we import
+	a noisy audio clip:
+	
+
+		[x,Fs] = wavread('noisy_clip_lab_demo.wav') ;
+
+		Fs
+
+		soundsc(x,Fs)
+
+	
+	The frequency content of this signal clearly changes with time, since
+	it involves musical notes of different frequencies played in
+	succession.  This variation can be captured by evaluating DFTs over
+	consecutive time intervals of suitable length.  It is possible to
+	display these DFTs in time succession using a three dimensional 
+	plot, i.e,
+
+		magnitude of DFT   versus  (frequency, time)
+
+	The SPECTROGRAM function performs this computation. Thus, e.g.,
+
+
+		S = spectrogram(x,512,0) ;
+
+	
+	consists of DFTs of consecutive 512-long segments of x with zero (0)
+	overlap between segments; each segment is multipliplied by a 
+	"window" function for enhancement of the spectral features. The 
+	magnitude of S can be displayedon a db scale using
+
+
+		mesh(db(abs(S))), xlabel('Time'), ylabel('Freq')
+
+		view(100,45)
+
+	
+	showing a clear separation between the low frequency components 
+	(music) and the high-frequency noise.  Alternatively, the command
+
+	
+		spectrogram(x,512,0)
+		
+	
+	produces a 2-D plot of the log-magnitude of the matrix S.  
+
+	We observe that:
+
+	- the musical signal is bandlimited to frequencies 0 to 0.5*pi
+
+	- the noise is bandlimited to 0.6*pi to 0.8*pi
+
+	and thus the lowpass filter designed previously (with passband
+	edge 0.5*pi and stopband edge 0.6*pi) is suitable for denoising
+	the signal.
+
+
+6.	The filter is implemented using 
+
+
+		y = conv(x,b) ;
+		spectrogram(y,512,0) ;
+
+	
+	where b is the filter coefficient vector.  CONV stands for (linear)
+	convolution, which is exactly what the input-output relationship
+	(%%%) in 1. above represents. Alternatively, the built-in function 
+	FILTER can be used:
+
+
+		y = filter(b,1,x) ;
+        spectrogram(y,512,0) ;
+
+	where again b is the coefficient vector, and the middle argument 1
+	denotes an FIR filter (in the case of an IIR filter, another 
+	coefficient vector is used instead).  There is a slight difference 
+	between the CONV and FILTER implementations, in that the last M 
+	samples producedby CONV (as the filter 'runs out' of input samples) 
+	are discarded by FILTER.
+
+	Now play it back:
+	
+		soundsc(y,Fs)
