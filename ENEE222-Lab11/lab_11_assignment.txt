@@ -1,0 +1,49 @@
+LAB ASSIGNMENT 11 - due 12/05
+_____________________________
+
+(15 pts.)
+
+
+	The surface shown in surfplot11.pdf is "physically" generated
+	as follows:
+
+	- A pyramid with square base ([-1,1]x[-1,1]) and vertex 
+	at height c = 1.5 above the origin (0,0) is erected.
+
+	- The top of the pyramid is hollowed out by removing the portion
+	of it that falls within a sphere of radius r=1 centered at
+	the vertex.
+	
+	Write MATLAB commands that will generate the exact same
+	surface plot. Use 200 points for each of the x and y grids,
+	the WINTER colormap with flat shading, and viewing angles of 
+	70 (azimuth) and 35 (elevation).  Make sure the axes are properly 
+	scaled (as shown). Also, use the AXIS TIGHT option.
+
+	Tips:
+	
+	- Use linspace(-1,1,200), which conveniently skips the origin.
+
+	- Using appropriate inequalities, define four regions on the
+	(x,y) plane, making sure the regions cover the entire grid without 
+	any overlap among them.  Alternatively, the pyramid can be defined
+	in  a single region using a combination of abs(.) and either max(.)
+	or min(.)
+
+	- Define a separate region for the footprint (projection) of
+	the sphere.
+
+	- Use the MIN function as needed (check documentation).
+___________________________________________________________________________
+
+Submit (use exact file names as shown):
+
+lastname_labhw_11.m
+
+	The commands for generating the pyramid plot.  It is not necessary
+	to submit your surface plot.  Useful comments should be given.
+
+The zip or rar package should be named as lastname_labhw_11.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 11 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 11 Assignment
+
