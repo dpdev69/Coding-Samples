@@ -1,0 +1,277 @@
+LAB 10, 11/08/13
+________________
+	
+	
+
+1.	The DFT can be used directly to estimate the frequency of a real or
+	complex sinusoid based on a finite number of samples.  If the
+	vector s defined by
+	
+	%	n = (0:L-1).'		
+	%	s = exp(j*w0*n)			
+
+	is padded with N-L zeros to obtain
+
+	% 	x = [s ; zeros(N-L,1)]	
+
+	then the magnitude spectrum abs(fft(x)) will consist of N uniform 
+	samples of the frequency-domain function
+
+	%	abs ( sin( (w-w0)*L/2 )./sin( (w-w0)/2) )
+
+	which has a maximum at w=w0.  This enables us to determine w0 with
+	arbitrary precision by locating the peak of abs(fft(x)), computed for
+	a sufficiently large value of N.
+
+	A real sinusoid of frequency w0 is the sum of two complex sinusoids
+	of frequencies w0 and -w0.  If L samples of a real sinusoid are given,
+	w0 and -w0 will closely match the positions of the peaks in the left
+	and right halves of the magnitude spectrum; the agreement will be very 
+	good provided there is little overlap between the main lobes in the 
+	left and right halves of the spectrum, i.e., provided w0 is not too 
+	close to 0 or pi radians.  As the number of available samples L 
+	increases, the main lobe width L decreases and the accuracy improves.
+
+
+2.	Starting with a complex sinusoid,
+	
+		w0 = 0.781*2*pi ;	
+		q = 0.659*2*pi ;	
+		L = 20 ;
+		n = (0:L-1).' ;
+		s = exp(j*(w0*n+q)) ;
+		
+		S = fft(s) ;
+		stem(n/L,abs(S),'r')
+		xlabel(['Frequency \omega/(2\pi)'])
+		hold on
+
+		N = 1024;
+		X = fft(s,N);		% zero-padded DFT, no need to define x
+
+		plot((0:N-1)/N,abs(X))
+		hold off
+
+	Verify that w0 is approximately equal to 2*pi*(k0/N), where k0 is the 
+	location of the maximum:
+
+		k0 = find( abs(X)==max(abs(X)) ) - 1 ;	% MATLAB indexing!
+		w0
+		2*pi*(k0/N)
+
+	Repeat with a real sinusoid, w in [0,pi]:
+			
+		w0 = 0.327*2*pi ;	
+		q = 0.659*2*pi ;
+		L = 20 ;
+		n = (0:L-1).' ;
+		s = cos((w0*n+q)) ;	% cos(.) instead of exp(j*(.))
+		
+		S = fft(s) ;
+		stem(n/L,abs(S),'r')
+		xlabel(['Frequency \omega/(2\pi)'])
+		hold on
+
+		N = 1024;
+		X = fft(s,N);
+		plot((0:N-1)/N,abs(X))
+
+		A = abs(X(1:floor(N/2)+1)) ;	% left half of magnitude spectrum
+		k0 = find( A==max(A) ) - 1;
+		w0
+		2*pi*(k0/N)
+
+	Frequency resolution improves as L increases:
+
+		L = 80;
+		n = (0:L-1).' ;
+		s = cos((w0*n+q)) ;
+
+		N = 1024;
+		X = fft(s,N);
+		plot((0:N-1)/N,abs(X)), xlabel(['Frequency \omega/(2\pi)'])
+
+		A = abs(X(1:N/2+1)) ;	
+		k0 = find( A==max(A) )-1 ;
+		w0
+		2*pi*(k0/N)
+
+
+3.	We illustrate frequency detection by synthesizing and testing DTMF
+	(dual-tone multi-frequency) signals used in touch-tone dialing. Our
+	discussion parallels the MATLAB demo accessed from
+
+		help dtmfdemo
+
+	and the schematic diagram below is copied directly from it.
+
+	Pressing any key on a touch-tone keypad generates an analog signal
+	which is the sum of two (real) sinusoids, whose frequencies are
+	determined by the row and column in which the key is located:
+
+                        1209 Hz   1336 Hz   1477 Hz
+                       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                      |         |         |         |
+                      |         |   ABC   |   DEF   |
+              697 Hz  |    1    |    2    |    3    |
+                      |_ _ _ _ _|_ _ _ _ _|_ _ _ _ _|
+                      |         |         |         |
+                      |   GHI   |   JKL   |   MNO   |
+              770 Hz  |    4    |    5    |    6    |
+                      |_ _ _ _ _|_ _ _ _ _|_ _ _ _ _|
+                      |         |         |         |
+                      |   PRS   |   TUV   |   WXY   |
+              852 Hz  |    7    |    8    |    9    |
+                      |_ _ _ _ _|_ _ _ _ _|_ _ _ _ _|
+                      |         |         |         |
+                      |         |         |         |
+              941 Hz  |    *    |    0    |    #    |
+                      |_ _ _ _ _|_ _ _ _ _|_ _ _ _ _|
+
+	Thus, e.g., the dial tone for key '8' is a sum of two sinusoids of 
+	frequencies 852 and 1336 Hz. (No two frequencies in the set are 
+	harmonics of each other, and no frequency can be obtained as the sum 
+	or difference of any other two frequencies.)
+
+
+4.	We will synthesize a DTMF signal for any key sequence by writing
+	a function DTMFDIAL with the following input arguments:
+
+		- the key sequence (in the form of a character string) ;
+
+		- the sampling rate Fs ;
+
+		- the duration of each key (dual-) tone ;
+
+		- the pause between keys
+
+	The output argument will be the DTMF signal vector.  In addition,
+	the function will play back the signal using SOUNDSC.
+
+	We will use the following input values to illustrate each step in
+	the function script.
+
+		keys = '*7410852#963' ;
+		Fs = 8000 ;
+		T = 0.3 ;
+		Tpause = 0.05 ;
+
+        x = dtmfdial(keys,Fs,T,Tpause);
+
+	(Single-step after the function header.)
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	function x = dtmfdial(keys,Fs,T,Tpause)
+
+	% DTMFDIAL DTMF dialer
+	% 	DTMF(KEYS,FS,T,TPAUSE), where KEYS is a string array 
+	%	consisting of characters 1,2,3,4,5,6,7,8,9,*,0 and #,
+	%	produces samples of a DTMF (touch-tone) dial signal
+	%	for a sampling rate of Fs samples/sec. T is the duration
+	% 	of each key and Tpause is the pause between keys, both in
+	%	seconds. The analog sound is also played back.
+
+		keypad = ['123';'456';'789';'*0#'] ;
+		
+		Frow = [697 770 852 941] ;
+
+		Fcol = [1209 1336 1477] ;
+
+		t = (0:fix(T*Fs)).'/Fs  ;
+
+		rowtones = cos(2*pi*t*Frow) ;	
+
+		coltones = cos(2*pi*t*Fcol) ;	
+
+		zp = zeros(fix(Tpause*Fs/2),1) ;
+
+		x = [];
+
+		for r = 1:length(keys(:))
+			[i j] = find(keypad==keys(r)) ;
+			x = [x ; zp ; rowtones(:,i)+coltones(:,j) ; zp] ;
+		end
+
+		soundsc(x,Fs)
+
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+5.	The time-domain plot of the DTMF signal x produced above shows 
+	dial tones alternating with pauses, as expected:
+        
+        N = length(x);
+        n = 0:N-1;
+        t = n/Fs;
+        
+		clf
+		plot(t,x)
+
+	The magnitude spectrum is also interesting - it's plotted below 
+	against analog frequency, i.e., by converting the discrete DFT
+	index k to (k/N)*Fs (Hz):
+
+        k = n;
+        F = (k/N)*Fs;
+
+		X = fft(x) ;
+		plot(F, abs(X))
+
+	The seven spikes in the plot abs(X) occur at frequencies that are very
+	close to the single tone frequencies in Frow and Fcol, which is to be
+	expected since x (above) can be written as the sum of 24 sinusoidal
+	blocks of the same length - occurring at 12 different time origins and 
+	padded with zeros on either side. Note that each of the frequencies 
+	in Frow is present in 3 blocks, while each of the frequencies in Fcol 
+	is present in 4 blocks - hence the peaks corresponding to the latter 
+	set of frequencies are higher. However, the magnitude spectrum alone 
+	does not reveal which keys were dialed, and in what order.
+
+
+6.	If we examine each of the 12 dial tone intervals separately, we can
+	detect which two frequencies are present, and hence decode the key
+	dialed.  For simplicity, we consider just one such interval,
+	corresponding to the (2,3) entry in the keypad, namely '6':
+
+		s = rowtones(:,2) + coltones(:,3) ;
+		N = length(s) ;
+		k = 0:N-1 ;
+		F = (k/N)*Fs;
+		
+		S = fft(s) ;
+		plot(F, abs(S))
+
+	Using the data cursor, we find that the maxima occur at F = 769.7 Hz
+	and F = 1446 Hz, for which the closest entries of Frow and Fcol are
+	770 and 1447, as expected.  The same results can be obtained by
+
+		kcutoff = round(N*1000/Fs)	;		% Frow < 1000 Hz < Fcol
+		Si = S(1:kcutoff) ;
+		Sj = S(kcutoff+1:floor(N/2)+1) ;
+		ki = find( abs(Si)==max(abs(Si)) )-1 ;
+		kj = find( abs(Sj)==max(abs(Sj)) )+kcutoff-1 ;
+		Fi = ki*Fs/N ;
+		Fj = kj*Fs/N ;
+		i = find( abs(Frow-Fi)==min(abs(Frow-Fi)) ) 	;
+		j = find( abs(Fcol-Fj)==min(abs(Fcol-Fj)) ) 	;
+		dialed_key = keypad(i,j)
+		
+	Zero-padding is not needed in this case since the signal vector is 
+	long (N=2401).
+
+	In fact, one can detect the correct frequency pair, and thus also the 
+	key dialed, using much shorter segments of the dual-tone signals.
+
+	Also, since only seven (known) frequencies are involved, it is not 
+	really necessary to compute a full DFT - i.e., one can effectively 
+	detect which frequencies are present by computing inner products with 
+	sinusoids at those frequencies. (The Goertzel algorithm mentioned in 
+	the demo does just that.)
+
+		
+
+		
+
+	
