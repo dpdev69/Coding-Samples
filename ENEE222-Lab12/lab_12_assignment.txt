@@ -1,0 +1,58 @@
+LAB ASSIGNMENT 12 - due 12/12
+_________________________________
+
+(20 pts.)
+
+
+The signal in the file NOISY_CLIP_HW.WAV is a music clip corrupted with
+noise. The objective of this assignment is to denoise it.
+
+i)	Use WAVREAD to import the noisy audio signal as vector x.  What
+	is the sampling rate Fs? Listen to x using SOUNDSC.
+
+ii)	Use the SPECTROGRAM function and a mesh plot (as in Lab 12, item 5)
+	to determine the frequency bands occupied by the clean signal and 
+	the noise.  What type of filter (lowpass or highpass) will remove
+	the noise, and what should the filter frequency parameters roughly 
+	be?
+
+iii)	Using FDATOOL, design a filter inline with the following constraints,
+	and import its coefficient vector into your workspace and name it bb:
+
+	  Order: 80, i.e., 81 filter coefficients will be generated.
+
+	  Transition bandwidth: wstop and wpass should be selected so as to
+	  satisfy |wstop-wpass| = 0.05 in normalized units (i.e., 0.05*pi
+	  rad/sample)
+
+	  Passband ripple and stopband attenuation tradeoff:  If the filter
+	  obtained with the default weights (1.0 and 1.0) does not produce
+	  a satisfactory result in iv) below, repeat with a different weight
+	  ratio until the playback sounds right.
+
+iv)	Use the FILTER function to compute the filter output (for input x)
+	and play it back using SOUNDSC (and the right value for Fs).
+	Verify that your result is satisfactory and write the clean (denoised)
+	audio signal into lastname_labhw_12.wav.
+
+___________________________________________________________________________
+
+Submit (use exact file names as shown):
+
+lastname_labhw_12.m
+
+	Should include: the value of Fs, the type of filter used, its
+	parameters (passband, stopband, ripple and attenuation).
+
+	Also, paste the entire coefficient vector bb as a column vector
+	using FORMAT LONG.
+
+	Useful comments should be given.
+
+lastname_labhw_12.wav
+
+	The clean (denoised) audio signal.
+	
+The zip or rar package should be named as lastname_labhw_12.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 12 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 12 Assignment
