@@ -1,0 +1,169 @@
+LAB 3, 09/20/13
+________________
+
+
+1. A FOR-END loop is a simple control-flow feature for
+	 executing a set of commands a fixed number of times.
+	
+	 For example:
+
+		 c = -0.1 ;
+		 z = 0  ;
+		 v = [z];
+
+		 for k = 1:1000
+			 z = z^2 + c ;
+			 v = [v ; z] ;
+		 end
+
+	The first three statements are initializations.
+
+	The counting variable k is internal to the loop; any
+	symbol can be used.
+
+	This simple program produces a column vector of 1001
+	entries, with first entry equal to 0, and nth entry z_n
+	given iteratively by
+
+		z_n = (z_(n-1))^2 + c
+
+	where c was the chosen value -0.1.
+
+
+2. A script file is a collection of MATLAB commands, saved
+ 	 with the .M extension:
+
+		SCRIPT_FILE.M
+
+	To execute these commands, make sure the file is in the
+	working MATLAB directory, and simply type 
+
+		SCRIPT_FILE
+
+	in the command window.
+
+	Your task: create the file 
+
+		iterate_1.m
+
+	consisting of the commands in 1. above with the exception
+	of the very first line, i.e., the initialization of c.
+
+	Then execute in the command window using
+
+		c = -0.1 ;
+		
+		iterate_1
+
+
+3. The iteration of 2. above is the basis for the Mandelbrot
+	 fractal:
+
+	http://www.math.utah.edu/~alfeld/math/mandelbrot/large.gif
+
+	It consists of all points c on the complex plane for
+	which the iteration in 1. (initialized at c) results in
+
+		|z_n| less than or equal to 2 
+
+	for ALL n.  For certain values of c, this property can
+	be proved or disproved analytically; for other values, we
+	have to rely on numerical results, which, of course, do
+	not provide definite proof.
+
+	Some examples (note: ABS(Z) is the modulus of Z):
+
+
+		c = -0.1 ; 	iterate_1 ; plot(abs(v))
+
+		c = -2 ; 	iterate_1 ; plot(abs(v))
+
+		c = 1/4 ; 	iterate_1 ; plot(abs(v))
+
+		c = j	; 	iterate_1 ; plot(abs(v))
+
+		c = 1/2 ;	iterate_1 ; plot(abs(v))
+
+		c = 2*j ; 	iterate_1 ; plot(abs(v))
+
+	The first four values of c are inside the Mandelbrot set;
+	the last two are outside. (Can be proved analytically.)
+
+
+4. As was seen above, the choices c=1/2 and c=2*j resulted
+	 in |z_n| exceeding 2 very soon, i.e., for small n.  To avoid
+	 needless iterations, we can use a WHILE loop instead
+	 of a FOR loop.  For example:
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			
+		z = 0  ;
+		v = [z];
+
+		while (abs(z)<=2) & (length(v)<=1000)
+
+			z = z^2 + c ;
+			v = [v ; z] ;
+
+		end
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	ensures that the loop is terminated as soon as abs(z)>2, with
+	a maximum of 999 iterations.
+	
+	Note the use of the logical operator & in the WHILE condition
+	above.  Logical and relational (e.g., <=) operators are 
+	straightforward in MATLAB.  You can get documentation on them 
+	using, e.g.,
+
+		HELP & 
+
+	(or other operator symbol, as appropriate).
+
+
+
+5.	Save the code given above (between the two %%%%% lines) as
+
+		iterate_2.m
+
+	and try out the initial values
+
+		c = -0.1, -2, 1/4, j, 1/2, 2*j
+
+	with ITERATE_2 replacing ITERATE_1. In each case, determine
+
+		max(abs(v))
+
+	Your conclusions should be similar to 3. above.
+
+
+6.	Next, we will use ITERATE_2 to test a large set of complex 
+	numbers for inclusion in the Mandelbrot set. Specifically, we 
+	consider all values c = x+j*y on the rectangular grid
+
+		x = -2 : 0.04 : 2 ;
+
+		y = -2 : 0.04 : 2 ;
+
+	The c's that pass the test will be stored in a vector S.
+
+	The rectangular grid will be scanned using two nested FOR loops.
+
+		S = [ ] ;
+
+		for x = -2 : 0.04 : 2
+		  for y = -2 : 0.04 : 2
+		  
+		    c = x + j*y ;
+		    iterate_2
+		    
+		    if max(abs(v)) <= 2
+                        S = [ S c ];
+                    end
+                    
+		  end
+		end
+
+		plot(S, '+')
+		
