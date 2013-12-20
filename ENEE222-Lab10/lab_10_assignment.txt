@@ -1,0 +1,56 @@
+LAB ASSIGNMENT 10 - due 11/21
+_________________________________
+
+(20 pts.)
+
+	
+The signal in the file DIALTONES10.WAV is a sequence of eight DTMF 
+tones obtained using a nonstandard set of frequencies (in Hz):
+
+       Frow = [622 715 823 946]
+
+       Fcol = [1183 1360 1565]
+
+The signal vector x was generated using the function DTMFDIAL introduced
+in Lab 10, with Frow and Fcol modified as above. Thus
+
+	x = dtmfdial(key_string,Fs,T,Tpause)
+
+The objective is to recover key_string from x.
+
+i)	Use WAVREAD to import the vector x. What is its length N 
+	and sampling rate Fs? Listen to x using SOUNDSC.
+
+ii)	Plot x (in the time domain).  Use your plot to estimate the values
+	of T and Tpause.
+
+iii)	By examining the magnitude spectra of eight segments selected from
+	x, determine key_string.
+
+iv)	Using your results for Fs, T, Tpause and key_string, re-synthesize
+	x (as, e.g., x_est) using the function DTMFDIAL with Frow and 
+	Fcol modified as above.  Play it back using SOUNDSC to verify
+	that it sounds like x.
+
+___________________________________________________________________________
+
+Submit (use exact file names as shown):
+
+lastname_labhw_10.m
+
+	State the values of N and Fs, obtained in part (i).  Give your
+	estimates of T and Tpause from part (ii).  Give your answer
+	for key_string, together with the MATLAB code used to obtain
+	key_string.  Useful comments should be given.
+
+
+lastname_labhw_10.pdf
+
+	Graph of the magnitude spectrum used for obtaining the first
+	key in key_string.
+	
+The zip or rar package should be named as lastname_labhw_10.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 10 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 10 Assignment
+
+
