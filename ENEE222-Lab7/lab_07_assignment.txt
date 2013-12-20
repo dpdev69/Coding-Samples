@@ -1,0 +1,59 @@
+LAB ASSIGNMENT 7 (due 10/24)
+____________________________
+
+(Total Points: 15)
+
+
+Consider the function s(t) defined for t in [0,4) by
+
+                  { sin(pi*t/2)  , for t in [0,1)
+           s(t) = { -(t-2)^5     , for t in [1,3)
+                  { sin(pi*t/2)  , for t in [3,4)
+
+(i)   Generate a column vector s consisting of 512 uniform
+      samples of this function over the interval [0,4). (This
+      is best done by concatenating three vectors.)
+
+(ii)  If V is the normalized Haar wavelet matrix of size
+      512, determine the vector c such that
+
+                       s = V*c
+
+(iii) Use the script in Lab 7, item 7, to display the successive
+      Haar wavelet approximations to s, from the coarsest scale 
+      (Scale 0) to the finest scale (Scale 9).  The vector t
+      should be redefined as 0:511 for this part.
+
+(iv)  If y is the approximation to s using Scales 0 to 7 (i.e.,
+      excluding Scales 8 and 9), evaluate the relative
+      root mean square error
+
+                       norm(s-y)/norm(s)
+
+(v)   In a single graph show s (red) and y (blue) plotted against t.
+
+________
+
+Submit a zip or rar package containing the following files (use exact 
+file names as shown):
+
+LASTNAME_LABHW_07.m
+
+	It should contain 
+
+		- the commands used in part (i) to create the vector s;
+
+		- the commands used in part (iv) to compute the relative
+		  root mean square error
+
+		- the value of the root mean square error calculated in part (iv)
+
+		- the commands used to generate the graph in part (v)
+
+LASTNAME_LABHW_07.pdf
+
+	The graph generated in part (v)
+
+The zip or rar package should be named as lastname_labhw_07.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 7 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 07 Assignment
