@@ -1,0 +1,178 @@
+LAB 2, 09/13/13
+________________
+
+1.	MATLAB distinguishes between
+
+	- matrix operations (which follow the standard rules of linear
+	  algebra)
+
+	and
+
+	- array operations (which are performed on individual elements
+	  of an array, or between corresponding elements of different
+	  arrays of the same size)
+
+	Array operators that differ from their matrix counterparts are
+	generally preceded by . (period)
+
+	For example, if A and B are matrices of size m*n, then
+
+		A  *  B  (matrix product) is defined only when m=n
+
+		A.' * B  (also matrix product) is always defined, by
+			virtue of the transposition of A
+
+		A  .* B  (array product) is always defined, and produces
+			a new array of the same size
+
+	Thus
+		a = 1:4
+
+		b = 1:2:7
+
+		a*b         % undefined
+
+		a.'*b       % valid
+
+		a*b'        % dot product of a and b
+
+		a.*b        % same size as a and b
+
+
+2.	The commands 
+
+		PLOT and STEM
+
+	were introduced earlier, in basic plotting applications. MATLAB
+	has diverse 2-D graphing capabilities.  The PLOT command, in
+	particular, can be used in a variety of formats.
+
+	Consider three sinusoids, each spanning 1000 points in the time 
+	interval [0,2) sec:
+
+		Ts = 0.002;          % spacing, or sampling period
+
+		t = 0:Ts:(2.0-Ts);   % discrete time axis
+
+		T1 = 1/5; q1 =   .2; % period, phase (sinusoids 1,2,3)
+		T2 = 1/3; q2 = -1.8;
+		T3 = 1/4; q3 =  2.5;
+
+		A1 = 1.0; A2 = 2.0; A3 = 3.0; % amplitudes
+
+		x1 = A1*cos(2*pi*t/T1 + q1) ;
+		x2 = A2*cos(2*pi*t/T2 + q2) ;
+		x3 = A3*cos(2*pi*t/T3 + q3) ;
+
+	Does the time interval [0,2) contain a whole or fractional number
+	of periods of each sinusoid?
+
+
+3.	Basic plot of x1 (no time axis):
+
+		plot(x1)
+
+	With the correct time axis:
+
+		plot(t,x1)
+
+	Add a grid:
+
+		grid
+
+	(To adjust the grid density, click EDIT and then AXIS PROPERTIES on
+	the figure window. Change the tick spacing for the X and Y axes.)
+
+	Clear the figure window:
+
+		clf
+
+	Plot x1 in red:
+
+		plot(t,x1,'r')
+
+	Use the HOLD function to hold the current plot and overlay a plot of
+	x2 in black:
+
+		hold		% hold turned on
+		plot(t,x2,'k')
+
+	Continue holding (no action needed) and overlay a plot of x3 in
+	a dotted blue line:
+
+		plot(t,x3,'b:')
+
+	You can also plot all three graphs using the same PLOT command:
+
+		hold		% hold turned off (alt.: just use CLF)
+		plot(t,x1,t,x2,t,x3)
+
+
+4.	Change the properties of the axes using the AXIS command:
+
+		axis square
+
+		axis fill
+
+		axis([0,2,-4,4])
+
+		axis([-1,3,-4,4])
+
+		axis tight
+
+	These properties can also be changed using EDIT > AXES PROPERTIES
+	in the figure window.  The same holds for graph and axis labels: they
+	can be specified in the figure window (as axes properties), or in
+	the command window using
+
+		XLABEL, YLABEL and TITLE
+
+	For example:
+
+		xlabel('Time')		% Quotes denote character string
+		
+		ylabel('Voltage')
+	
+		title('Three Sinusoids')
+
+
+5. 	A sinusoid and its exponentially faded version:
+
+
+		f = 660/8192;       % frequency parameter in cycles/sample
+		N = 256;            % number of samples
+		r = 4;              % exponential decay parameter
+
+		n = 0:N-1;          % discrete time axis
+
+		x = cos(2*pi*f*n);  % thus w = 2*pi*f
+
+		e = exp(-r*n/N);    % like cos(.), exp(.) operates on
+		                    % each element of the array
+
+		y = x.*e;           % array multiplication
+
+		plot(x)             
+
+		plot(y)             % note exponentially decaying envelope
+		
+		hold
+		
+		plot(e)
+
+
+6.	The SUBPLOT function allows multiple graphs to be displayed on a grid
+	in the same figure window.  This is accomplished by preceding each PLOT
+	(or STEM, BAR, etc.) command by the statement
+
+		SUBPLOT(NROWS,NCOLS,ORDER)
+
+	where NROWS is the number of rows, NCOLS is the number of columns and 
+	i=1,2,... is the ORDER in which the graph is displayed on the grid.
+	Try out
+
+		clf
+
+		subplot(2,1,1), plot(x(1:200))
+
+		subplot(2,1,2), plot(y(1:200))
