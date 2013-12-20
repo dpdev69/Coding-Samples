@@ -1,0 +1,54 @@
+LAB ASSIGNMENT 09 - due 11/07
+_________________________________
+
+(20 pts.)
+	
+The signal in the file AUDIO09.wav consists of N samples of a
+signal y, which is a modulated version of a bandlimited audio
+signal x:
+
+	 y[n] = x[n]*cos(w*n), 	n = 0:N-1
+
+Here, w = K*(2*pi/N) for some K.
+
+The objective is to demodulate y, i.e., obtain x.
+
+i)	 Use WAVREAD to import the vector y. What is its length N 
+	 and sampling rate Fs? Listen to y using SOUNDSC.
+
+ii)	 Compute the DFT Y of y and plot its magnitude. Using the 
+	 modulation property of the DFT and noting symmetries in 
+	 the figure, determine K.
+
+iii) Using the value of K found in (ii), reconstruct the DFT X from Y.
+
+iv)	 Invert X to obtain your version of x (make sure it's real!).
+	 Play it back using SOUNDSC to make sure the result is
+	 satisfactory. Encode x into a .WAV file using
+
+		 wavwrite(x,Fs,'lastname_labhw_09.wav')
+
+	 (If you get a warning about clipping, replace x by
+	  0.99*x/max(abs(x)).)
+
+___________________________________________________________________________
+
+Submit a zip or rar package containing the following files (use exact 
+file names as shown):
+
+lastname_labhw_09.m
+
+	 State the values of N, Fs and K, with an explanation of how you 
+	 obtained K.  You only need to include the MATLAB code used in
+	 obtaining x (time domain) from Y (frequency domain) in steps
+ 	 (iii) and (iv).  Useful comments should be given.
+
+lastname_labhw_09.wav	
+	
+	 From (iv) above.
+
+The zip or rar package should be named as lastname_labhw_09.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 9 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 09 Assignment
+
+
