@@ -1,0 +1,64 @@
+LAB ASSIGNMENT 6 (due 10/17)
+______________________________
+
+(Total Points: 15)
+
+PART 1
+
+- 	Open MATLAB and from there open and study circle-line.fig.
+    Note that there are two shapes visible - a circle centered at
+    the top-right, and a line from the bottom left to the top-right.
+
+-	As in item 5 in Lab 5, generate a square X-Y grid using
+		
+		m = 500 ;
+		a = 0 : 1/m : 1 ;
+
+        (note that m is higher, so we'll have a larger image)        
+        
+-	As efficiently as possible, construct a matrix A
+	such that
+
+		imshow(flipud(A))
+
+	produces an image identical to circle-line.fig
+	
+	NOTE: When you do imshow(flipud(A)), x and y are in their "usual"
+	      orientation.  That is, x increases to the right, and y
+	      increases toward the top of the figure.
+    
+    A command you may find useful is xor(A, B) which, when applied to
+    two logical matrices of the same size, returns logical xor for each
+    of the entries in A and B.
+
+
+PART 2
+
+    Using the method in Lab 6, item 5, determine the total number of singular 
+    4x4 symmetric matrices whose entries take values 5, 7, 9, and 11.
+    
+    Although there are 16 entries in a 4x4 symmetric matrix, there are only 10
+    independent values, because 6 are repeats.
+    
+    NOTE: This computation will take a very long time.  Make sure everything is
+          working correctly before you run it for all permutations.
+    
+    Make a comment which tells the number of singular matrices you calculated.
+
+________
+
+Submit a zip or rar package containing the following file (use the exact 
+file name as shown):
+
+lastname_labhw_06.m
+        The m-file should contain the MATLAB code for both tasks.  For
+		part 2, include the answer (# of singular matrices).  Insert at 
+        least one comment, at the most important line in your code; and 
+        additional comments that might help the grader better understand 
+        your solution and give you partial credit in case of errors.  
+        Please put your name and student ID on the first line.
+
+The zip or rar package should be named as lastname_labhw_06.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 6 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 06 Assignment
+___________________________________________________________________________
