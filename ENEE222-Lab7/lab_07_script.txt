@@ -1,0 +1,244 @@
+LAB 7, 10/18/13
+________________
+
+
+1. 	If A is a MxN matrix, then
+
+		A'*A
+
+	is the matrix of inner products of the columns of A. Note that 
+	using ' (conjugate transpose) instead of .' (transpose) ensures 
+	that the result is correct in the case where A has complex entries; 
+	it makes no difference in the case where A is real-valued.
+
+	If A has orthogonal columns, then A'*A is a diagonal matrix. Since
+	the (j,j)th entry of A'*A is the squared norm of the jth column
+	of A, it follows that A'*A is nonsingular unless one or more of
+	the columns of A is the all-zeros vector.
+
+	Example:
+
+		a1 = [ 3  1  1 -1 ].'  ;
+		a2 = [ 1 -2  0  1 ].'  ;
+		a3 = [-1  1  5  3 ].'  ;
+		a4 = [ 1  2 -2  3 ].'  ;
+
+		A = [a1 a2 a3]
+
+		A'*A
+
+		A = [a1 a2 a3 a4]
+
+		A'*A		% all columns of A are orthogonal
+
+
+2.	If A is a NxN matrix with orthogonal columns, then 
+
+		A*x = b
+
+	can be solved by projecting b onto each of the columns of A.
+	This can be written compactly as
+
+		(A'*A)*x = A'*b
+	i.e.,
+		x = inv(A'*A)*(A'*b)
+
+	Since inv(A'*A) is diagonal, each x(i) equals the inner product
+	of the ith column of A with b, divided by the squared norm
+	of the ith column of A.  This is the same as the coefficient
+	of the projection of b onto the ith column of A.
+
+	Example, continued:
+
+		b = [1 8 4 9].'
+
+		A\b		% conventional solution (Gauss. elim.)
+
+		A'*b
+
+		(A'*A)\(A'*b)		
+
+		(A'*b)./diag(A'*A)	
+
+
+	Orthogonal projections have important applications in signal
+	representation and approximation.  If V is a NxN matrix with
+	orthogonal columns, then any N-dimensional signal vector 
+	s can be represented as
+
+		s = V*c
+
+	where c is the vector of projection coefficients, determined as
+	above (this is the same equation as A*x = b).
+
+	By setting one or more entries of c equal to zero, we obtain the 
+	linear least-squares approximation of s using (the corresponding) 
+	subset of columns of V.  In MATLAB code, we can write
+
+		s_hat = V*(c.*ismember((1:N)',J))
+
+	where J is the vector of indices of the columns used in the 
+	approximation.
+	
+	    ismember([1 2 3 4 5] , [1 3 4])
+
+
+3.	For a basic illustration of orthogonal projections in signal
+	compression, we construct a NxN dimensional matrix V based on the
+	so-called Haar wavelet.  N is an integer power of 2, i.e., N=2^K.
+
+	The code for V, appended below the solid % line, has certain 
+	novel features.
+	
+	- The name of the function is haar222.
+
+	- Like script files, function files are saved with the .m extension,
+	  i.e., this should be saved as haar222.m
+
+	- Assuming haar222.m is in the working directory, typing
+
+		V = haar222(N) ;
+
+	  for a previously defined value of N will create a square matrix V
+	  whose actual (row or column) dimension is rounded down to the
+	  nearest integer power of 2.
+
+	- All variables that appear in the function file are local.
+
+	For the time being, save haar222.m in your working directory, and type
+
+		
+		haar222(8)              %Note the structure of the columns
+		
+		N = 64;
+		V = haar222(N) ;
+
+
+4.	The entries of V take values 0, 1 and -1.  Each column of V can be
+	thought of a signal vector in discrete time (t=0:63). The signal is
+	a pair of rectangular pulses, one positive and one negative, known
+	as the Haar wavelet, shown in different scales/resolutions:
+
+		for j=1:N
+			bar(V(:,j), 0.6), axis([1 64 -1.5 1.5])
+			title(['(j=' int2str(j) ')th Column of V'])
+			pause
+		end
+		clf
+
+	Note the use of INT2STR(X), which rounds the numerical argument X
+	to the nearest integer and produces a string.  The plot title
+	is the concatenation of three strings:
+
+		[ '(=' int2str(j) ')th Column of V' ]
+
+
+5.	The columns of V show the basic wavelet at different scales or
+	resolutions:
+
+		Scale 0:	col. 1		constant
+		Scale 1:	col. 2		wavelet duration = 64
+		Scale 2:	cols. 3:4	wavelet duration = 32
+		Scale 3:	cols. 5:8	wavelet duration = 16
+		Scale 4:	cols. 9:16	wavelet duration = 8
+		Scale 5:	cols. 17:32	wavelet duration = 4
+		Scale 6:	cols. 33:64	wavelet duration = 2
+
+	Two columns at the same scale are orthogonal since the corresponding
+	wavelets do not overlap.  It's also easy to see that across different
+	scales, overlaps can only occur over intervals where the larger wavelet
+	is constant, resulting in an inner product of zero:
+
+		for j = 2:N
+			clf
+			hold on
+			bar(1:N,1.5*V(:,ceil(j/2)),0.7,'y')
+			bar(V(:,j), 0.6, 'b'), axis([1 64 -2 2])
+			
+			hold off
+			pause
+		end
+		clf
+
+	Of course, orthogonality can be verified by computing the inner 
+	product matrix:
+
+		R = V'*V;
+		R - diag(diag(R));
+		max(ans(:))
+
+	We can also display V using IMSHOW:
+
+		imshow(V,[])
+
+		imshow(V,[]), colormap(pink)
+
+	The additional argument [MIN_VALUE, MAX_VALUE] instructs imshow to map
+	MIN_VALUE to 0 (black in the gray scale) and MAX_VALUE to 1 (white in
+	the gray scale).  The null choice [] takes MIN_VALUE and MAX_VALUE as
+	the actual minima and maxima of V.
+
+6.	The columns of V can be normalized by dividing each column by its norm:
+
+		U = V*diag(1./sqrt(diag(V'*V))) ;	
+		
+		max(max(U'*U - eye(N)))			% roundoff
+
+		imshow(U,[]), colormap(pink)	% note color variation
+
+	U is an orthonormal matrix, and thus s = U*c has the simple solution
+	
+		c = U'*s
+
+	From now, we will use the orthonormal version of V (i.e, U as above),
+	generated by the function nhaar222.
+	
+
+7.	To illustrate the Haar wavelet, we consider the representation of a
+	256-point sinusoid:
+
+		N = 256;		
+		t = 0:N-1 ;
+		s = sin(5*t/N).' ;
+		
+		V = nhaar222(N)  ;
+		c = V'*s		 ; 	% coefficient vector
+
+	By partitioning c into appropriate subvectors, we obtain the 
+	approximation of s using different scales.  Recall that Scale
+	0 corresponds to the first column, while Scale k>0 corresponds
+	to columns 2^(k-1)+1 through 2^k.
+		
+
+		clf
+		
+		subplot(2,1,1)
+		plot(t, s,'r')
+		title('Signal Vector')
+		axis([0 N-1 -1.2 1.2])
+		
+		subplot(2,1,2)
+		plot(t, c(1)*V(:,1))
+		title(['Approximation By Constant (Scale 0)']),
+		axis([0 N-1 -1.2 1.2])
+		pause
+
+		I = [1];
+		for k = 1:round(log2(N))
+			J = [2^(k-1)+1 : 2^k] ;
+			I = [I J] ;
+			cJ = c.*ismember((1:N)',J) ;
+			cI = c.*ismember((1:N)',I) ;
+			
+			subplot(2,1,1)
+			plot(t, s, 'r', t, V*cI)
+			title(['Approximation By Scales 0 - ' int2str(k)])
+			axis([0 N-1 -1.2 1.2])
+			
+			subplot(2,1,2)
+			plot(t, V*cJ)
+			title(['Approximation By Scale ' int2str(k) ' Only'])
+			axis([0 N-1 -1.2 1.2])
+			pause
+		end
+		clf
