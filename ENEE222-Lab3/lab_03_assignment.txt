@@ -1,0 +1,79 @@
+LAB ASSIGNMENT 3 (due 09/19)
+___________________________
+
+A linear filter acts on a complex-valued input sequence u[n] to produce an 
+output sequence v[n], where n is an integer representing discrete time.  
+At time n, the output sample is given by
+
+	v[n] =  - 0.6*v[n-1] - 0.5*v[n-2] + u[n]	(**)
+
+Suppose that the input sequence u[n] is given by
+
+	u[n] = 0 for n<0
+
+	u[n] = z^n = (a + j*b)^n, for n>=0  (***)
+
+where z is a complex number with real part a and imaginary part b.
+
+We would like to determine those values of a and b on the discrete
+grid
+	a = -2 : 0.05 : 2 ;
+
+	b = -2 : 0.05 : 2 ;
+
+such that v[n] is a bounded signal, i.e., there exists a finite value M 
+such that the magnitude of v[n] is less than M for all n.  Since we need to 
+stop at some n, we will use the following criterion for boundedness: 
+v[n] is bounded if by time n=1000, all output samples are less than 10^6 
+in absolute value.  Those complex numbers that pass the test are saved as
+a + j*b in a vector S, which is then plotted (imaginary versus real part).
+
+The idea is very similar to the one developed in Lab 3 for the Mandelbrot 
+set. Here are some pointers:
+
+	- Initialize both S and T to [ ] ;
+
+	- Use two nested FOR loops to cover the (a,b) grid.
+
+	- Use the vector vec to store the output samples produced by (**)
+
+	- Initialize vec to [0 0] and n = 0.  In effect, (**) will be used
+	  to compute output samples starting at time n = 0, assuming that
+	  the outputs at times n = -2 and n = -1 were both zero.
+
+	- Use a WHILE loop that
+
+	- computes the current input u using the formula (***)
+
+	- computes the corresponding output sample v using (**)
+
+	- appends v to vec
+
+	- increments n
+
+	  as long as the output is less than 10^6 in absolute value and
+	  the size of vec does not exceed 1002.
+
+	- Append a + j*b to S if the boundedness test is passed; otherwise
+	  append a + j*b to T
+
+	- Plot the points in S using . (point) as markers, and those
+	  in T using x (x-mark).
+
+______________________________________________________________________________________
+
+Submit a zip/rar package containing the following two files (use exact file
+names as shown):
+
+lastname_labhw_03.m	
+        M-file containing the MATLAB code and any additional comments or
+        explanations on separate lines preceded by % (comment character).
+        Please put your name and student ID on the first line.
+
+lastname_labhw_03.pdf
+        Figure saved in PDF format.
+
+The zip/rar package should be named as lastname_labhw_03.zip/rar, and 
+should be submitted to the entry for Lab Assignment 3 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 03 Assignment
+
