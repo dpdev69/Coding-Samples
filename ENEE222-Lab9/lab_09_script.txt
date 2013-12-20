@@ -1,0 +1,219 @@
+LAB 09, 11/01/13
+________________
+		
+
+1.	The discrete Fourier transform (DFT) and its inverse are computed 
+	using the FFT and IFFT functions in MATLAB. (FFT stands for "fast 
+	Fourier transform", i.e., an efficient implementation of the DFT.)
+
+	The NxN Fourier matrix V consists of N complex sinusoids, each of 
+	length N, at frequencies w = k*(2*pi/N), where k - 0:N-1.  It
+	can be generated efficiently using either
+
+		V = fft(eye(N))' ;	% eye(N) is the NxN identity
+
+		V = N*ifft(eye(N)) ;
+		
+		V = dftmtx(N)' ;
+
+	Thus,
+
+		N = 16 ;
+		V = fft(eye(N))' ;
+        n = 0:N-1 ;
+
+		for i=0:N-1
+			clf
+
+			subplot(2,1,1), stem(n,real(V(:,i+1)))	    % (i+1, not i)!
+			axis([-1 N -1.2 1.2])
+			title(['Real Part of (k=' int2str(i) ')th column'])
+
+			subplot(2,1,2), stem(n,imag(V(:,i+1)))
+			axis([-1 N -1.2 1.2])
+			title(['Imaginary Part of (k=' int2str(i) ')th column'])
+
+			pause
+		end
+		
+		clf
+
+		subplot(2,1,1), imshow(real(V),[-1 1])	% cosines only
+		title(['Real Part of V'])
+
+		subplot(2,1,2), imshow(imag(V),[-1 1])	% sines only
+		title(['Imaginary Part of V'])
+
+
+2.	We illustrate some of the features of the DFT using samples of
+	an audio signal stored in a .WAV file.  The file is imported into
+	MATLAB using the function WAVREAD and the syntax
+
+		[SAMPLES, SAMPLING_RATE] = WAVREAD('AUDIOCLIP.WAV')
+
+	The number of columns of SAMPLES is the same as the number of audio
+	channels encoded (thus only one column if the audio is mono).  The
+	SAMPLING_RATE parameter is in samples/sec and is essential for
+	correct playback.  See HELP for variations on the WAVREAD syntax
+	above.  Note that the data can be also imported using the 
+	FILE>IMPORT DATA drop-down menu.
+
+		[x, Fs] = wavread('superheroes.wav') ;
+		
+		N = length(x)
+
+		Fs
+
+		soundsc(x,Fs)
+		
+		clf
+		plot(x)
+
+		X = fft(x) ;
+
+		n = (0:N-1).' ;
+		k = n ;
+	
+		plot(k,abs(X)), title(['Magnitude of X'])
+
+	Note that the magnitude spectrum has a sharp cutoff at k = 30000,
+	thus the discrete-time signal is essentially bandlimited to
+
+	%	f = 30000/N = 3/16 cycles/sample
+
+	and the corresponding continuous-time signal is bandlimited to
+
+	%	F = f*Fs = (3/16)*32000 = 6000 Hz
+
+
+3.	Symmetry properties of the spectrum of a real signal:
+
+
+	% 	real(X) = real( X([1 N:-1:2]) )
+
+	%	imag(X) = -imag( X([1 N:-1:2]) )
+
+	%	abs(X) = abs( X([1 N:-1:2]) )		
+
+	%	angle(X) = -angle( X([1 N:-1:2]) )	
+
+
+	Phase spectrum:
+
+		plot(k,angle(X)), title(['Phase of X'])
+
+	While seemingly random, the phase spectrum contains important 
+	information and cannot be ignored.  If we attempt to reconstruct x
+	using the same magnitude spectrum and a random phase spectrum, 
+	the audible result is just noise:
+
+		q = pi*rand(size(x)) ; 
+		q = q - q([1 N:-1:2]) ;		% circular odd symmetry
+		Y = abs(X).*exp(j*q) ;
+		y = real(ifft(Y)) ;		% real(.) explained below
+		soundsc(y,Fs)
+
+	Using
+
+		real(ifft(Y))   instead of just  ifft(Y)
+
+	(as above) eliminates spurious imaginary parts in cases where the
+	result is real-valued (according to theory).
+
+
+4.	Circular time reversal:
+
+		x_rev = x([1 N:-1:2]) ;
+		
+		subplot(2,1,1), plot(n, x) 
+		title(['Original Sound Signal x'])
+
+		subplot(2,1,2), plot(n, x_rev)
+		title(['Signal x Reversed'])		
+		
+		soundsc(x_rev,Fs)
+
+		X_rev = fft(x_rev) ;
+
+		subplot(2,1,1), plot(k, abs(X)) 
+		title(['Magnitude Spectrum of x'])
+
+		subplot(2,1,2), plot(k, abs(X_rev)) 
+		title(['Magnitude Spectrum of x Reversed'])
+
+		phasediff = angle(X_rev)-angle(X([1 N:-1:2])) ;
+
+		max(abs(phasediff))
+
+
+	
+	Circular time shift (delay):
+
+		M = 63914 ;
+		
+		x_del = circshift(x,M) ;
+
+		subplot(2,1,1), plot(n, x) 
+		title(['Original Sound Signal x'])
+
+		subplot(2,1,2), plot(n, x_del) 
+		title(['Signal x Delayed'])	
+		
+		soundsc(x_del,Fs) 
+
+		X_del = fft(x_del) ;
+
+		subplot(2,1,1), plot(k, abs(X)) 
+		title(['Magnitude Spectrum of x'])
+
+		subplot(2,1,2), plot(k, abs(X_del)) ;
+		title(['Magnitude Spectrum of x Delayed'])
+
+		Xdiff = X_del - X.*exp(-j*k*2*pi*M/N) ;
+
+		max(abs(Xdiff))
+
+
+5.	Amplitude modulation (AM) using carrier at frequency 8000 Hz:
+
+		K = N*8000/Fs			% K = 40000
+
+		x_mod = x.*cos(n*2*pi*K/N) ;
+
+		subplot(2,1,1), plot(n, x)
+		title(['Original Signal x'])
+
+		subplot(2,1,2), plot(n, x_mod) 
+		title(['AM Version of x'])
+		
+		nzoom = 50000:50199 ;	
+		subplot(2,1,1), plot(nzoom, x(nzoom))
+		hold on
+		plot(nzoom, -x(nzoom), 'r')
+		hold off
+		title(['Signal x (Blue) and -x (Red)'])
+
+		subplot(2,1,2), plot(nzoom, x_mod(nzoom))				
+		hold on
+		plot(nzoom, x(nzoom),'r')
+		plot(nzoom, -x(nzoom), 'r')
+		hold off
+		title(['AM Version of x (Blue)'])
+
+		soundsc(x_mod,Fs) 
+
+		X_mod = fft(x_mod) ;
+
+		subplot(2,1,1), plot(k, abs(X)) 
+		title(['Magnitude Spectrum of x'])
+
+		subplot(2,1,2), plot(k, abs(X_mod)) 
+		title(['Magnitude Spectrum of AM Signal'])
+
+	Mathematically, X_mod is the sum of two circularly shifted
+	versions of X (by K=40000 indices, in opposite directions),
+	each scaled by 1/2.  Since the nonzero portion of X is over a
+	set of indices (-30000:30000) of size less than N/2 = 80000, it
+	is indeed possible to obtain two nonoverlapping shifts of X by
+	proper choice of K.
+		
