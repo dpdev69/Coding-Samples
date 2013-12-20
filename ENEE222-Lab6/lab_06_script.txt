@@ -1,0 +1,187 @@
+LAB 6, 10/11/2013
+_____________
+
+
+1.	The functions 
+
+		MIN, MAX, SUM, PROD, SORT (ascending order)
+
+	have obvious meaning when applied to numerical (row or column) 
+	vectors.  When applied to 2-D matrices, the operations are performed
+	separately on each column.  For example,
+
+		A = floor(rand(5)*10)
+
+		min(A)
+
+		min(min(A))
+
+		sum(A)
+
+		sum(sum(A))
+
+		(prod(A'))'		% row, instead of column, products
+
+		sort(A)
+
+		-sort(-A)		% columns sorted in descending order
+
+
+
+2.	So far we have considered numeric and logical arrays.  Another
+	type of array is the so-called string array, which consists of
+	ASCII characters.
+
+	String arrays are specified using quotes, which may enclose
+	single or multiple characters.  The quotes also help distinguish
+	string arrays from variable names.
+
+	Examples:
+
+		A			% variable name
+					% values displayed with indent					
+
+		'A'			% string 
+					% displayed without indent
+
+		string1 = 'A$>'
+
+		size(string1)
+
+		string2 = ['A' '$>']
+
+		string1 == string2
+
+
+
+	Two-dimensional string arrays can be also specified (e.g., to
+	display multiple lines of text), as long as all rows have the
+	same number of elements:
+
+
+		['nineteen characters' ; 'followed by twenty-two']
+
+		['insert spaces' ; '  as needed! ']
+	
+	
+	In time, we will examine some important links (and functions that 
+	enable them) between strings and numerical arrays.
+
+
+
+
+
+
+
+3.	The NxN system of linear equations
+
+		A*x = b
+
+	is solved using the backslash operator
+
+		x = A\b
+
+	Matlab will adaptively choose a specific algorithm to solve the 
+    	systems of linear equations according to the structure of the matrix A.
+	For more information, see the documentation for MLDIVIDE.
+
+	Notationally, this is equivalent to
+
+		x = inv(A)*b
+
+	The latter syntax is correct, but it (generally) involves more 
+    	operations than A\b and possibly more round-off errors. To 
+	    compare the error in the two computations, consider
+
+		for i = 1:1000			% number of trials
+			A = rand(100,100) ;	% random entries in (0,1)		
+			x = rand(100,1) ;	% the solution
+			b = A*x ;
+
+			xsol1 = A\b ;
+			xsol2 = inv(A)*b ;
+
+			e(i) = ( sum( abs(x-xsol1) ) < sum( abs(x-xsol2) ) );
+		end
+
+		sum(e)/1000         % frequency with which A\b has lower abs. error
+
+	A novel feature in the FOR loop above was the on-the-fly creation
+	of the (logical) vector e, indexed by the loop variable i.  There
+	was no need to initialize e.
+
+4.	Of course, A*x = b has no solution if the matrix A is singular
+	(has no inverse).  For example:
+
+		A = [ 3 1 -2 11 ; 1 8 2 -3 ; 4 15 7 1 ; 1 2 -5 4 ] 
+
+		b = A*[1 1 1 1].'
+
+		A\b
+
+	Singularity can be confirmed by computing the determinant (DET), which
+	is nonzero if and only if the matrix is nonsingular.  In this case,
+
+		det(A)
+
+	produces a value of 0.
+
+	An alternative (and standard) expression for the determinant of a
+	NxN matrix is the sum of N! products, each product containing N 
+	terms of the matrix A.  If the matrix has integer entries, then the 
+	determinant is also an integer; thus a small answer can be rounded
+	off to 0.
+
+	The rank of a matrix (obtained by the function RANK) is the largest 
+	number of linearly independent columns - or equivalently, rows - that 
+	can be drawn from that matrix.  A NxN matrix is nonsingular if and
+	only if it has rank equal to N.  Compare
+
+		rank(A)             % singular, as we saw earlier
+
+		rank(rand(4,4))     % almost certainly nonsingular
+
+		rank(rand(5,4))     % why?
+
+		rank(rand(4,5))     % why?
+			
+	
+	
+	
+5.	In the last example, we test all 3x3 matrices whose entries take 
+	values 5, 6, 7 or 8 for singularity.   We do so using a single FOR 
+	loop, with loop index i = 0:4^9-1.  The index is converted to a 
+	base-4 integer, which is then read into the columns of a 3x3 matrix A, 
+	after incrementing each digit by 5.  Three new functions are used:
+
+		DEC2BASE(D,B,K)   converts a decimal integer D into a B-ary
+                          string with a total of K digits
+
+		STR2NUM(S) 	converts numeric characters to actual integers
+
+		BLANKS(K)	string of K blanks (row vector)
+
+	Also, the syntax
+
+		A(:)        concatenation of all columns of A into a 
+                    single column vector
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		c = 0 ;                          % initialize # singular matrices
+		B = blanks(9) ;
+
+		for i = 0:4^9-1
+			S = dec2base(i,4,9) ;
+			S = [S;B] ;
+			S = S(:)' ;                   % 4-ary digits separated by spaces
+			A = str2num(S) + 5 ;
+			A = reshape(A,3,3) ;
+			c = c + (abs(det(A))<0.5) ;  % compensate for round-off
+		end
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	Thus 25,252 out of a total of 4^9 = 262,144 such matrices are singular.
+
+
