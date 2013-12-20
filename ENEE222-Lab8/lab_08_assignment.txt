@@ -1,0 +1,103 @@
+LAB ASSIGNMENT 8 (due 10/31)
+____________________________
+
+(Total Points: 15)
+
+	
+	In Lab 8, item 7, we wrote the function COMPRESS1 which finds the
+	M absolutely largest entries of a real or complex vector X, nulls out 
+	the remaining entries, and also computes the energy (square norm) 
+	ratio R between the output and input vectors.
+
+	Write a variant of COMPRESS1, called COMPRESS2, which is called as
+	follows:
+
+		[Y,K,L,R] = compress2(X,M)
+
+	The argument X is a complex 2-D array. As before, the M absolutely
+	largest entries of X are selected, the remaining entries are nulled
+	out, and the energy ratio
+
+		R = (sum of abs(y_i).^2 of output array (Y) elements)/
+			(sum of abs(x_i).^2 of input array (X) elements)
+
+	is computed.  In addition, two output index vectors K and L are
+	generated, such that
+
+			[K L]
+
+	consists of the M pairs of indices (k,l) such that X(k,l) is
+	selected for Y.  The ordering of these index pairs should follow 
+	the linear indexing convention in MATLAB, i.e., column-by-column.
+
+	For example, if
+
+	X = 
+
+	    	-1     3     4     7
+	     	 8    -2     1     1
+	     	 0   -13     1     4
+	
+	and M = 5, then  
+
+		[Y,K,L,R] = compress2(X,M)
+
+	should produce
+
+	Y = 
+
+		0     0     4     7
+		8     0     0     0
+		0   -13     0     4
+	
+	and
+
+	[K L] = 
+	
+	     2     1
+	     3     2
+	     1     3
+	     1     4
+	     3     4
+
+	and
+	
+	R = 0.9486
+	
+
+
+	Hints:
+
+	- Do NOT start your code in a function structure.  Instead, you should 
+	  start with a piece of code that fulfills all the aforementioned 
+	  requirements and eventually, if no error can be found, shape your 
+	  code to the required function COMPRESS2.
+
+	- Review the notation x(:) and study the function RESHAPE.
+
+	- The function IND2SUB will be particularly useful in generating
+	  the index vectors K and L.
+
+________
+
+Submit a zip or rar package containing the following files (use exact 
+file names as shown):
+
+lastname_labhw_08.m
+
+	It should contain 
+
+		- a matrix X defined in your favor for testing purpose,
+		
+		- a value M defined in your favor for testing purpose, and
+
+		- a call to compress2.
+
+compress2.m
+
+	The required function, with useful comments.
+
+The zip or rar package should be named as lastname_labhw_08.zip / .rar, and 
+should be submitted to the entry for Lab Assignment 8 on ELMS.  
+Go to ENEE222 -> Assignments -> Lab 08 Assignment
+
